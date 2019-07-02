@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -76,11 +77,12 @@ namespace Memory
             UI_Element optionsRect = new UI_Element(320, 280, 150, 50, "Options", GameWindow.Options);
             UI_Element quitRect = new UI_Element(320, 345, 150, 50, "Quit", GameWindow.Quit);
             toMenu = new UI_Element(590, 460, 100, 20, "Back", GameWindow.Menu);
-            
+
             menuItems = new List<UI_Element> { startRect, optionsRect, quitRect };
             gameWindow = GameWindow.Menu;
 
             memCards = new List<UI_Element>();
+
             int x = 95;
             int y = 20;
 
@@ -95,6 +97,8 @@ namespace Memory
                     x = 95;
                 }
             }
+
+            var image = rl.LoadTexture("Solution Items\\emoji.png");
 
             while (!rl.WindowShouldClose())
             {
