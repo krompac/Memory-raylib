@@ -26,13 +26,12 @@ namespace Memory
             color = Color.BLUE;
         }
 
-        public void DrawMe()
+        public virtual void DrawMe()
         {
             DrawRectangleRec(rect, color);
-            DrawText(text, (int)rect.x + text.Length, (int)rect.y + ((int)rect.height / 3), (int)rect.height / 2, Color.RED);
         }
 
-        public bool CheckIfClicked()
+        public virtual bool CheckIfClicked()
         {
             return CheckCollisionPointRec(GetMousePosition(), rect) && IsMouseButtonPressed(0);
         }
@@ -47,10 +46,37 @@ namespace Memory
     {
         public Card(int x, int y, int w, int h, string text, string fileName = "") : base(x, y, w, h, text)
         {
+            if (fileName != "")
+            {
+                image = LoadTexture(fileName);
+            }
 
+            position = new Vector2(rect.x, y);
+            drawImage = false;
         }
 
-        
+        public override void DrawMe()
+        {
+            base.DrawMe();
+
+            if (drawImage)
+                DrawTextureEx(image, position, 0, 0.1f, Color.WHITE);
+        }
+
+        public override bool CheckIfClicked()
+        {
+            if (base.CheckIfClicked())
+            {
+                drawImage = true;
+            }
+
+
+            return true;
+        }
+
+        bool drawImage;
+        Texture2D image;
+        Vector2 position;
     }
 
     class Button : UI_Element
@@ -58,6 +84,13 @@ namespace Memory
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h, text)
         {
             this.Window = window;
+        }
+
+        public override void DrawMe()
+        {
+            base.DrawMe();
+
+            DrawText(text, (int)rect.x + text.Length, (int)rect.y + ((int)rect.height / 3), (int)rect.height / 2, Color.RED);
         }
 
         public GameWindow Window { get; private set; }
@@ -91,6 +124,8 @@ namespace Memory
             {
                 gameWindow = toMenu.Window;
             }
+
+            memCards.ForEach(card => card.CheckIfClicked());
         }
 
         static void Main(string[] args)
@@ -104,30 +139,32 @@ namespace Memory
             menuItems = new List<Button> { startRect, optionsRect, quitRect };
             gameWindow = GameWindow.Menu;
 
+
             memCards = new List<Card>();
 
             int x = 95;
             int y = 20;
 
-            for (int i = 0; i < 16; i++)
+            var images = Directory.GetFiles("willdabeast").ToList();
+            var imageCount = images.Count;
+
+            for (int i = 0; i < imageCount; i++)
             {
-                memCards.Add(new Card(x, y, 140, 100, "CARD"));
-                x += 150;
+                memCards.Add(new Card(x, y, 55, 55, "CARD", images[i]));
+                x += 65;
 
                 if ((i + 1) % 4 == 0)
                 {
-                    y += 110;
+                    y += 65;
                     x = 95;
                 }
             }
-
-            var image = LoadTexture("slika.png");
 
             while (!WindowShouldClose())
             {
                 BeginDrawing();
 
-                ClearBackground(Color.WHITE);
+                ClearBackground(Color.BLACK);
 
                 switch (gameWindow)
                 {
