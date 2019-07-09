@@ -9,13 +9,14 @@ namespace Memory
 {
     class GameManager
     {
+        int resetTimer;
+        int lastTimeFrame;
         private List<Button> menuItems;
         private List<Card> memCards;
         private Button toMenu;
         private Button startButton;
         private Button optionsButton;
         private Button quitButton;
-
         private GameWindow gameWindow;
 
         public GameManager()
@@ -69,6 +70,9 @@ namespace Memory
             int x = 95;
             int y = 20;
 
+            resetTimer = 0;
+            lastTimeFrame = 0;
+
             var images = Directory.GetFiles("willdabeast").ToList();
             var imageCount = images.Count;
 
@@ -98,6 +102,12 @@ namespace Memory
             }
         }
 
+        private void ResetCounters()
+        {
+            resetTimer = 0;
+            lastTimeFrame = 0;
+        }
+
         private void DrawGameWindow()
         {
             memCards.ForEach(card => card.DrawMe());
@@ -107,7 +117,30 @@ namespace Memory
                 gameWindow = toMenu.Window;
             }
 
-            memCards.ForEach(card => card.CheckIfClicked());
+            var lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+
+            if (Card.NumberOfOpenCards == 2)
+            {
+                if (resetTimer == 3)
+                {
+                    memCards.ForEach(card => card.ResetMe());
+                    ResetCounters();
+                }
+                else if (lastTimeFrame > 0 && DateTime.Now.Second - lastTimeFrame >= 1)
+                {
+                    resetTimer++;
+                    lastTimeFrame = DateTime.Now.Second;
+                }
+                else
+                {
+                    lastTimeFrame = DateTime.Now.Second;
+                }
+            }
+            else if (lastOpenedCard != null && Card.NumberOfOpenCards > 2)
+            {
+                memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
+                ResetCounters();
+            }
         }
     }
 }

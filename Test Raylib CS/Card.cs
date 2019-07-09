@@ -5,6 +5,12 @@ namespace Memory
 {
     class Card : UI_Element
     {
+        public static int NumberOfOpenCards = 0;
+
+        private bool drawImage;
+        private Texture2D image;
+        private Vector2 position;
+
         public Card(int x, int y, int w, int h, string text, string fileName = "") : base(x, y, w, h, text)
         {
             if (fileName != "")
@@ -21,22 +27,27 @@ namespace Memory
             base.DrawMe();
 
             if (drawImage)
+            {
                 DrawTextureEx(image, position, 0, 0.1f, Color.WHITE);
+            }
         }
 
         public override bool CheckIfClicked()
         {
-            if (base.CheckIfClicked())
+            bool isClicked = base.CheckIfClicked();
+            if (isClicked)//&& !drawImage)
             {
                 drawImage = true;
+                NumberOfOpenCards++;
             }
 
-
-            return true;
+            return isClicked;
         }
 
-        bool drawImage;
-        Texture2D image;
-        Vector2 position;
+        public void ResetMe()
+        {
+            drawImage = false;
+            NumberOfOpenCards = 1;
+        }
     }
 }
