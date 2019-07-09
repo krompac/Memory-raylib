@@ -124,6 +124,7 @@ namespace Memory
                 if (resetTimer == 3)
                 {
                     memCards.ForEach(card => card.ResetMe());
+                    Card.NumberOfOpenCards = 0;
                     ResetCounters();
                 }
                 else if (lastTimeFrame > 0 && DateTime.Now.Second - lastTimeFrame >= 1)
@@ -139,6 +140,7 @@ namespace Memory
             else if (lastOpenedCard != null && Card.NumberOfOpenCards > 2)
             {
                 memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
+                Card.NumberOfOpenCards = 1;
                 ResetCounters();
             }
         }

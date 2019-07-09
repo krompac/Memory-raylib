@@ -47,7 +47,6 @@ namespace Memory
         public void ResetMe()
         {
             drawImage = false;
-            NumberOfOpenCards = 1;
         }
     }
 }
