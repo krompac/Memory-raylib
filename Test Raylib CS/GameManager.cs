@@ -18,6 +18,9 @@ namespace Memory
         private Button optionsButton;
         private Button quitButton;
         private GameWindow gameWindow;
+        private Card firstOpenedCard;
+        private Card lastOpenedCard;
+
 
         public GameManager()
         {
@@ -70,21 +73,38 @@ namespace Memory
             int x = 95;
             int y = 20;
 
+            firstOpenedCard = null;
+            lastOpenedCard = null;
+
             resetTimer = 0;
             lastTimeFrame = 0;
 
-            var images = Directory.GetFiles("willdabeast").ToList();
-            var imageCount = images.Count;
+            Dictionary<string, int> images = new Dictionary<string, int>();
 
-            for (int i = 0; i < imageCount; i++)
+            var imageList = Directory.GetFiles("willdabeast").ToList();
+            imageList.ForEach(name => images.Add(name, 0));
+            var imageCount = 8;
+
+            int j = 0;
+            Random random = new Random();
+
+            while (memCards.Count != imageCount * 2)
             {
-                memCards.Add(new Card(x, y, 55, 55, "CARD", images[i]));
-                x += 65;
+                j = random.Next(imageCount);
+                Console.WriteLine(j);
 
-                if ((i + 1) % 4 == 0)
+                if (images[imageList[j]] != 2)
                 {
-                    y += 65;
-                    x = 95;
+                    memCards.Add(new Card(x, y, 55, 55, j, "CARD", imageList[j]));
+                    x += 65;
+
+                    images[imageList[j]]++;
+
+                    if ((memCards.Count) % 4 == 0)
+                    {
+                        y += 65;
+                        x = 95;
+                    }
                 }
             }
         }
@@ -108,6 +128,17 @@ namespace Memory
             lastTimeFrame = 0;
         }
 
+        private void ResetCards()
+        {
+            firstOpenedCard = null;
+            lastOpenedCard = null;
+        }
+
+        private bool CheckMatchedCard()
+        {
+            return firstOpenedCard != null && lastOpenedCard != null && firstOpenedCard.CardID == lastOpenedCard.CardID && firstOpenedCard != lastOpenedCard;
+        }
+
         private void DrawGameWindow()
         {
             memCards.ForEach(card => card.DrawMe());
@@ -116,32 +147,60 @@ namespace Memory
             {
                 gameWindow = toMenu.Window;
             }
-
-            var lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
-
-            if (Card.NumberOfOpenCards == 2)
+            else
             {
-                if (resetTimer == 3)
+                if (firstOpenedCard == null)
                 {
-                    memCards.ForEach(card => card.ResetMe());
-                    Card.NumberOfOpenCards = 0;
-                    ResetCounters();
-                }
-                else if (lastTimeFrame > 0 && DateTime.Now.Second - lastTimeFrame >= 1)
-                {
-                    resetTimer++;
-                    lastTimeFrame = DateTime.Now.Second;
+                    firstOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
                 }
                 else
                 {
-                    lastTimeFrame = DateTime.Now.Second;
+                    lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+
+                    if (lastOpenedCard == firstOpenedCard)
+                    {
+                        lastOpenedCard = null;
+                        Card.NumberOfOpenCards = 1;
+                    }
                 }
-            }
-            else if (lastOpenedCard != null && Card.NumberOfOpenCards > 2)
-            {
-                memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
-                Card.NumberOfOpenCards = 1;
-                ResetCounters();
+
+                if (Card.NumberOfOpenCards == 2)
+                {
+                    if (CheckMatchedCard())
+                    {
+                        memCards.Remove(firstOpenedCard);
+                        memCards.Remove(lastOpenedCard);
+                        ResetCounters();
+                        ResetCards();
+                        Card.NumberOfOpenCards = 0;
+                    }
+                    else
+                    {
+                        if (resetTimer == 3)
+                        {
+                            memCards.ForEach(card => card.ResetMe());
+                            Card.NumberOfOpenCards = 0;
+                            ResetCounters();
+                            ResetCards();
+                        }
+                        else if (lastTimeFrame > 0 && DateTime.Now.Second - lastTimeFrame >= 1)
+                        {
+                            resetTimer++;
+                            lastTimeFrame = DateTime.Now.Second;
+                        }
+                        else
+                        {
+                            lastTimeFrame = DateTime.Now.Second;
+                        }
+                    }
+                }
+                else if (lastOpenedCard != null && Card.NumberOfOpenCards > 2)
+                {
+                    memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
+                    Card.NumberOfOpenCards = 1;
+                    ResetCounters();
+                    firstOpenedCard = null;
+                }
             }
         }
     }

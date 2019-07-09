@@ -10,13 +10,16 @@ namespace Memory
         private bool drawImage;
         private Texture2D image;
         private Vector2 position;
+        public int CardID { get; private set; }
 
-        public Card(int x, int y, int w, int h, string text, string fileName = "") : base(x, y, w, h, text)
+        public Card(int x, int y, int w, int h, int cardId, string text, string fileName = "") : base(x, y, w, h, text)
         {
             if (fileName != "")
             {
                 image = LoadTexture(fileName);
             }
+
+            this.CardID = cardId;
 
             position = new Vector2(rect.x, y);
             drawImage = false;
