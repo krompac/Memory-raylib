@@ -68,6 +68,11 @@ namespace Memory
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             gameWindow = GameWindow.Menu;
 
+            InitializeMainGame();
+        }
+
+        private void InitializeMainGame()
+        {
             memCards = new List<Card>();
 
             int x = 95;
@@ -146,6 +151,7 @@ namespace Memory
             if (toMenu.CheckIfClicked())
             {
                 gameWindow = toMenu.Window;
+                InitializeMainGame();
             }
             else
             {
