@@ -11,6 +11,7 @@ namespace Memory
         private Texture2D image;
         private Vector2 position;
         public int CardID { get; private set; }
+        public bool IsFound { get; set; }
 
         public Card(int x, int y, int w, int h, int cardId, string text, string fileName = "") : base(x, y, w, h, text)
         {
@@ -23,11 +24,15 @@ namespace Memory
 
             position = new Vector2(rect.x, y);
             drawImage = false;
+            IsFound = false;
         }
 
         public override void DrawMe()
         {
-            base.DrawMe();
+            if (!IsFound)
+            {
+                base.DrawMe();
+            }
 
             if (drawImage)
             {
@@ -37,11 +42,17 @@ namespace Memory
 
         public override bool CheckIfClicked()
         {
-            bool isClicked = base.CheckIfClicked();
-            if (isClicked)//&& !drawImage)
+            bool isClicked = false;
+
+            if (!IsFound)
             {
-                drawImage = true;
-                NumberOfOpenCards++;
+                isClicked = base.CheckIfClicked();
+
+                if (isClicked)//&& !drawImage)
+                {
+                    drawImage = true;
+                    NumberOfOpenCards++;
+                }
             }
 
             return isClicked;
@@ -49,7 +60,10 @@ namespace Memory
 
         public void ResetMe()
         {
-            drawImage = false;
+            if (!IsFound)
+            {
+                drawImage = false;
+            }
         }
     }
 }

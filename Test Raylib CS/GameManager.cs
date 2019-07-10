@@ -20,10 +20,13 @@ namespace Memory
         private GameWindow gameWindow;
         private Card firstOpenedCard;
         private Card lastOpenedCard;
+        private UI_Element gameWonPanel;
+        private Button gameWonButton;
 
 
         public GameManager()
         {
+
             InitializeGame();
         }
 
@@ -42,6 +45,11 @@ namespace Memory
                         break;
                     case GameWindow.Game:
                         DrawGameWindow();
+
+                        if (memCards.Count(card => card.IsFound) == memCards.Count)
+                        {
+                            DrawGameWon();
+                        }
                         break;
                     case GameWindow.Options:
                         break;
@@ -60,10 +68,17 @@ namespace Memory
 
         private void InitializeGame()
         {
-            startButton = new Button(320, 215, 150, 50, "Start Game", GameWindow.Game);
-            optionsButton = new Button(320, 280, 150, 50, "Options", GameWindow.Options);
-            quitButton = new Button(320, 345, 150, 50, "Quit", GameWindow.Quit);
+            int xPos = 320;
+            int yPos = 150;
+            int yDiff = 65;
+
+            startButton = new Button(xPos, yPos, 150, 50, "Start Game", GameWindow.Game);
+            optionsButton = new Button(xPos, yPos + yDiff, 150, 50, "Options", GameWindow.Options);
+            quitButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Quit", GameWindow.Quit);
             toMenu = new Button(590, 460, 100, 20, "Back", GameWindow.Menu);
+
+            gameWonPanel = new UI_Element(325, 110, 480, 220, "YOU WON");
+            gameWonButton = new Button(280, 220, 50, 100, "Okay", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             gameWindow = GameWindow.Menu;
@@ -75,7 +90,9 @@ namespace Memory
         {
             memCards = new List<Card>();
 
-            int x = 95;
+            int startinXPos = 110;
+
+            int x = startinXPos;
             int y = 20;
 
             firstOpenedCard = null;
@@ -88,7 +105,7 @@ namespace Memory
 
             var imageList = Directory.GetFiles("willdabeast").ToList();
             imageList.ForEach(name => images.Add(name, 0));
-            var imageCount = 8;
+            var imageCount = imageList.Count - 2;
 
             int j = 0;
             Random random = new Random();
@@ -105,12 +122,25 @@ namespace Memory
 
                     images[imageList[j]]++;
 
-                    if ((memCards.Count) % 4 == 0)
+                    if ((memCards.Count) % 6 == 0)
                     {
                         y += 65;
-                        x = 95;
+                        x = startinXPos;
                     }
                 }
+            }
+        }
+
+        private void DrawGameWon()
+        {
+            gameWonPanel.DrawMe();
+            DrawText("YOU WON", 100, 110, 100, Color.BLACK);
+            gameWonButton.DrawMeWithLines(3, Color.BLACK);
+
+            if (gameWonButton.CheckIfClicked())
+            {
+                gameWindow = gameWonButton.Window;
+                InitializeMainGame();
             }
         }
 
@@ -174,8 +204,7 @@ namespace Memory
                 {
                     if (CheckMatchedCard())
                     {
-                        memCards.Remove(firstOpenedCard);
-                        memCards.Remove(lastOpenedCard);
+                        memCards.Where(card => card == firstOpenedCard || card == lastOpenedCard).ToList().ForEach(card => card.IsFound = true);
                         ResetCounters();
                         ResetCards();
                         Card.NumberOfOpenCards = 0;
