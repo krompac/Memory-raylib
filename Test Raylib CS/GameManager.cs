@@ -192,11 +192,13 @@ namespace Memory
                 else
                 {
                     lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
-
+                    
                     if (lastOpenedCard == firstOpenedCard)
                     {
                         lastOpenedCard = null;
+                        memCards.Where(card => card != firstOpenedCard).ToList().ForEach(card => card.ResetMe());
                         Card.NumberOfOpenCards = 1;
+                        ResetCounters();
                     }
                 }
 
@@ -234,7 +236,8 @@ namespace Memory
                     memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
                     Card.NumberOfOpenCards = 1;
                     ResetCounters();
-                    firstOpenedCard = null;
+                    firstOpenedCard = lastOpenedCard;
+                    lastOpenedCard = null;
                 }
             }
         }
