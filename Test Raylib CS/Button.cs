@@ -13,15 +13,7 @@ namespace Memory
         public override void DrawMe()
         {
             base.DrawMe();
-
             DrawText(text, (int)rect.x + text.Length, (int)rect.y + ((int)rect.height / 3), (int)rect.height / 2, Color.BLACK);
-        }
-
-        public void DrawMeWithLines(int lineThicknes, Color lineColor)
-        {
-            this.DrawMe();
-            Rectangle rectToDraw = new Rectangle(rect.x, rect.y + 28, rect.height + 28, rect.width + 15);
-            DrawRectangleLinesEx(rectToDraw, lineThicknes, lineColor);
         }
 
         public GameWindow Window { get; private set; }

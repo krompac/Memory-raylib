@@ -22,6 +22,12 @@ namespace Memory
             return CheckCollisionPointRec(GetMousePosition(), rect) && IsMouseButtonPressed(0);
         }
 
+        public virtual void DrawMeWithLines(int lineThicknes, Color lineColor)
+        {
+            this.DrawMe();
+            DrawRectangleLinesEx(rect, lineThicknes, lineColor);
+        }
+
         protected Rectangle rect;
         protected string text;
         protected Color color;

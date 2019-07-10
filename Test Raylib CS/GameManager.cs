@@ -78,7 +78,7 @@ namespace Memory
             toMenu = new Button(590, 460, 100, 20, "Back", GameWindow.Menu);
 
             gameWonPanel = new UI_Element(325, 110, 480, 220, "YOU WON");
-            gameWonButton = new Button(280, 220, 50, 100, "Okay", GameWindow.Menu);
+            gameWonButton = new Button(280, 220, 100, 50, "Okay", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             gameWindow = GameWindow.Menu;
@@ -113,7 +113,6 @@ namespace Memory
             while (memCards.Count != imageCount * 2)
             {
                 j = random.Next(imageCount);
-                Console.WriteLine(j);
 
                 if (images[imageList[j]] != 2)
                 {
@@ -133,8 +132,8 @@ namespace Memory
 
         private void DrawGameWon()
         {
-            gameWonPanel.DrawMe();
-            DrawText("YOU WON", 100, 110, 100, Color.BLACK);
+            gameWonPanel.DrawMeWithLines(5, Color.WHITE);
+            DrawText("YOU WON", 95, 110, 100, Color.BLACK);
             gameWonButton.DrawMeWithLines(3, Color.BLACK);
 
             if (gameWonButton.CheckIfClicked())
