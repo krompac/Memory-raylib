@@ -5,9 +5,12 @@ namespace Memory
 {
     class Button : UI_Element
     {
-        public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h, text)
+        private string text;
+
+        public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)
         {
             this.Window = window;
+            this.text = text;
         }
 
         public override void DrawMe()

@@ -4,7 +4,14 @@
     {
         Menu,
         Game,
+        PlayerSelect,
         Options,
         Quit
+    }
+
+    enum Players
+    {
+        OnePLayer,
+        TwoPlayers
     }
 }

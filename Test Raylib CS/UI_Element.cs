@@ -5,10 +5,9 @@ namespace Memory
 {
     class UI_Element
     {
-        public UI_Element(int x, int y, int w, int h, string text)
+        public UI_Element(int x, int y, int w, int h)
         {
             rect = new Rectangle(x - (w / 2), y, w, h);
-            this.text = text;
             color = Color.BLUE;
         }
 
@@ -29,7 +28,6 @@ namespace Memory
         }
 
         protected Rectangle rect;
-        protected string text;
         protected Color color;
     }
 }
