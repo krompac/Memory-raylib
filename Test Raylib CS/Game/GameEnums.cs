@@ -11,7 +11,7 @@
 
     enum Players
     {
-        OnePLayer,
+        OnePlayer,
         TwoPlayers
     }
 }

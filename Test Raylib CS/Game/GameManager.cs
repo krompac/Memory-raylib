@@ -74,12 +74,17 @@ namespace Memory
             var onePlayerButton = new Button(xPos, yPos, 150, 50, "1 player", GameWindow.Game);
             var twoPlayersButton = new Button(xPos, yPos + yDiff, 150, 50, "2 players", GameWindow.Game);
 
+            for (int i = 0; i < 4; i++)
+            {
+
+            }
+
             toMenu = new Button(590, 460, 100, 20, "Back", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             playersButtons = new List<Button> { onePlayerButton, twoPlayersButton };
             gameWindow = GameWindow.Menu;
-            numberOfPlayers = Players.OnePLayer;
+            numberOfPlayers = Players.OnePlayer;
 
             gameplay = new Gameplay();
 
