@@ -40,7 +40,7 @@ namespace Memory
 
             Dictionary<string, int> images = new Dictionary<string, int>();
 
-            var imageList = Directory.GetFiles("willdabeast").ToList();
+            var imageList = Directory.GetFiles(Program.GetCardsPath()).ToList();
             imageList.ForEach(name => images.Add(name, 0));
             var imageCount = imageList.Count - 2;
 
