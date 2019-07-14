@@ -74,7 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.cs" />
+    <Compile Include="Game\Player.cs" />
     <Compile Include="UI_Elements\Button.cs" />
     <Compile Include="UI_Elements\Card.cs" />
     <Compile Include="Game\GameManager.cs" />

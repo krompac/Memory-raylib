@@ -9,6 +9,7 @@ namespace Memory
 {
     class Gameplay
     {
+        private bool playerChanged;
         private int resetTimer;
         private int lastTimeFrame;
         private List<Card> memCards;
@@ -16,6 +17,8 @@ namespace Memory
         private Card lastOpenedCard;
         private UI_Element gameWonPanel;
         private Button gameWonButton;
+        public List<Player> Players { private get; set; }
+        int currentPlayerIndex;
 
         public Gameplay()
         {
@@ -65,6 +68,9 @@ namespace Memory
                     }
                 }
             }
+
+            currentPlayerIndex = 0;
+            playerChanged = false;
         }
 
         public bool CheckIfWon()
@@ -75,7 +81,8 @@ namespace Memory
         public void DrawGameWon(ref GameWindow gameWindow)
         {
             gameWonPanel.DrawMeWithLines(5, Color.WHITE);
-            DrawText("YOU WON", 95, 110, 100, Color.BLACK);
+            var winner = Players.OrderBy(player => player.Score).FirstOrDefault();
+            DrawText(winner.Name.ToUpper() + " WON", 95, 110, 100, Color.BLACK);
             gameWonButton.DrawMeWithLines(3, Color.BLACK);
 
             if (gameWonButton.CheckIfClicked())
@@ -89,6 +96,7 @@ namespace Memory
         {
             resetTimer = 0;
             lastTimeFrame = 0;
+            playerChanged = false;
         }
 
         private void ResetCards()
@@ -105,7 +113,12 @@ namespace Memory
         public void DrawGameplay(ref GameWindow gameWindow)
         {
             memCards.ForEach(card => card.DrawMe());
-            
+
+            if (Players.Count > 0)
+            {
+                Players.ForEach(player => player.DrawMe(currentPlayerIndex));
+            }
+
             if (firstOpenedCard == null)
             {
                 firstOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
@@ -127,6 +140,7 @@ namespace Memory
             {
                 if (CheckMatchedCard())
                 {
+                    Players[currentPlayerIndex].Score++;
                     memCards.Where(card => card == firstOpenedCard || card == lastOpenedCard).ToList().ForEach(card => card.IsFound = true);
                     ResetCounters();
                     ResetCards();
@@ -134,6 +148,13 @@ namespace Memory
                 }
                 else
                 {
+                    if (!playerChanged && Players.Count > 0)
+                    {
+                        currentPlayerIndex = currentPlayerIndex + 1 < Players.Count ? currentPlayerIndex + 1 : 0;
+                        memCards.ForEach(card => card.SetColor(Players[currentPlayerIndex].MyColor));
+                        playerChanged = true;
+                    }
+
                     if (resetTimer == 3)
                     {
                         memCards.ForEach(card => card.ResetMe());

@@ -11,7 +11,7 @@ namespace Memory
         static void Main(string[] args)
         {
             InitWindow(640, 480, "Memory");
-            SetWindowIcon(LoadImage("icon.png"));
+            SetWindowIcon(LoadImage(GetIconPath()));
 
             #region drawLetterTest
             //var imageText = ImageText("k", 10, Color.WHITE);
@@ -21,13 +21,14 @@ namespace Memory
 
             //while (!WindowShouldClose())
             //{
-            //    BeginDrawing();
+            //BeginDrawing();
 
-            //    ClearBackground(Color.BLACK);
+            //ClearBackground(Color.BLACK);
             //    DrawRectangleRec(rect, Color.ORANGE);
             //    DrawText("k", 100, 100, 10, Color.WHITE);
 
-            //    EndDrawing();
+
+            //EndDrawing();
 
             //    System.Threading.Thread.Sleep(10);
             //}

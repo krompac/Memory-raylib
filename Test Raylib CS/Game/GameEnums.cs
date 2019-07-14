@@ -8,10 +8,4 @@
         Options,
         Quit
     }
-
-    enum Players
-    {
-        OnePlayer,
-        TwoPlayers
-    }
 }

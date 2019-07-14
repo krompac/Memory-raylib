@@ -40,6 +40,11 @@ namespace Memory
             }
         }
 
+        public void SetColor(Color color)
+        {
+            this.color = color;
+        }
+
         public override bool CheckIfClicked()
         {
             bool isClicked = false;

@@ -12,7 +12,6 @@ namespace Memory
         private List<Button> menuItems;
         private List<Button> playersButtons;
         private Button toMenu;
-        private Players numberOfPlayers;
         private GameWindow gameWindow;
         private Gameplay gameplay;
 
@@ -38,8 +37,8 @@ namespace Memory
                         DrawPlayerSelectionMenu();
                         break;
                     case GameWindow.Game:
+                        DrawToMenu();
                         gameplay.DrawGameplay(ref gameWindow);
-                        DrawToMenu(true);
 
                         if (gameplay.CheckIfWon())
                         {
@@ -71,20 +70,18 @@ namespace Memory
             var optionsButton = new Button(xPos, yPos + yDiff, 150, 50, "Options", GameWindow.Options);
             var quitButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Quit", GameWindow.Quit);
 
+            yPos = 100;
+
             var onePlayerButton = new Button(xPos, yPos, 150, 50, "1 player", GameWindow.Game);
             var twoPlayersButton = new Button(xPos, yPos + yDiff, 150, 50, "2 players", GameWindow.Game);
-
-            for (int i = 0; i < 4; i++)
-            {
-
-            }
+            var threePlayersButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "3 players", GameWindow.Game);
+            var fourPlayersButton = new Button(xPos, yPos + yDiff * 3, 150, 50, "4 players", GameWindow.Game);
 
             toMenu = new Button(590, 460, 100, 20, "Back", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
-            playersButtons = new List<Button> { onePlayerButton, twoPlayersButton };
+            playersButtons = new List<Button> { onePlayerButton, twoPlayersButton, threePlayersButton, fourPlayersButton };
             gameWindow = GameWindow.Menu;
-            numberOfPlayers = Players.OnePlayer;
 
             gameplay = new Gameplay();
 
@@ -104,23 +101,54 @@ namespace Memory
             }
         }
 
-        private void DrawToMenu(bool reinitializeGameplay = false)
+        private void DrawToMenu()
         {
             toMenu.DrawMe();
             if (toMenu.CheckIfClicked())
             {
                 gameWindow = toMenu.Window;
-
-                if (reinitializeGameplay)
-                {
-                    gameplay.InitializeMainGame();
-                }
             }
+        }
+
+        private void InitializePlayers(int buttonPosition)
+        {
+            var players = new List<Player>();
+            switch (buttonPosition)
+            {
+                case 3:
+                    players.Add(new Player("Player4", Color.ORANGE, 3));
+                    goto case 2;
+                case 2:
+                    players.Add(new Player("Player3", Color.GREEN, 2));
+                    goto case 1;
+                case 1:
+                    players.Add(new Player("Player2", Color.RED, 1));
+                    goto case 0;
+                case 0:
+                    players.Add(new Player("Player1", Color.BLUE, 0));
+                    break;
+                default:
+                    break;
+            }
+
+            players.Reverse();
+            gameplay.Players = players;
         }
 
         private void DrawPlayerSelectionMenu()
         {
-            DrawWindowWithButtons(playersButtons);
+            playersButtons.ForEach(button => button.DrawMe());
+            var pressedButton = playersButtons.Where(button => button.CheckIfClicked()).FirstOrDefault();
+
+            if (pressedButton != null)
+            {
+                gameWindow = pressedButton.Window;
+                int buttonPosition = playersButtons.IndexOf(pressedButton);
+                gameplay.InitializeMainGame();
+                InitializePlayers(buttonPosition);
+                System.Threading.Thread.Sleep(500);
+            }
+
             DrawToMenu();
         }
     }
