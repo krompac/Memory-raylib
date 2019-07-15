@@ -44,22 +44,32 @@ namespace Memory
             Dictionary<string, int> images = new Dictionary<string, int>();
 
             var imageList = Directory.GetFiles(Program.GetCardsPath()).ToList();
-            imageList.ForEach(name => images.Add(name, 0));
-            var imageCount = imageList.Count - 2;
-
-            int j = 0;
+            var smallList = new List<string>();
+                        
             Random random = new Random();
+            int j = 0;
+            string randomPicture = "";
 
-            while (memCards.Count != imageCount * 2)
+            while (smallList.Count < 15)
             {
-                j = random.Next(imageCount);
+                j = random.Next(imageList.Count);
+                randomPicture = imageList[j];
+                smallList.Add(randomPicture);
+                imageList.Remove(randomPicture);
+            }
 
-                if (images[imageList[j]] != 2)
+            smallList.ForEach(name => images.Add(name, 0));
+
+            while (memCards.Count != smallList.Count * 2)
+            {
+                j = random.Next(smallList.Count);
+
+                if (images[smallList[j]] != 2)
                 {
-                    memCards.Add(new Card(x, y, 55, 55, j, imageList[j]));
+                    memCards.Add(new Card(x, y, 55, 55, j, smallList[j]));
                     x += 65;
 
-                    images[imageList[j]]++;
+                    images[smallList[j]]++;
 
                     if ((memCards.Count) % 6 == 0)
                     {
@@ -114,7 +124,7 @@ namespace Memory
         {
             memCards.ForEach(card => card.DrawMe());
 
-            if (Players.Count > 0)
+            if (Players.Count > 1)
             {
                 Players.ForEach(player => player.DrawMe(currentPlayerIndex));
             }

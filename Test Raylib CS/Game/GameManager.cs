@@ -84,8 +84,6 @@ namespace Memory
             gameWindow = GameWindow.Menu;
 
             gameplay = new Gameplay();
-
-            gameplay.InitializeMainGame();
         }
 
         private void DrawWindowWithButtons(List<Button> buttons)
