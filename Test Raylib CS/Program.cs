@@ -11,6 +11,7 @@ namespace Memory
         static void Main(string[] args)
         {
             InitWindow(640, 480, "Memory");
+            InitAudioDevice();
             SetWindowIcon(LoadImage(GetIconPath()));
 
             #region drawLetterTest
@@ -38,6 +39,7 @@ namespace Memory
             gameManager.GameLoop();
 
             CloseWindow();
+            CloseAudioDevice();
             System.Environment.Exit(1);
         }
 
@@ -53,14 +55,24 @@ namespace Memory
             return PathToPictures() + backslash + "willdabeast";
         }
 
-        public static string PathToPictures()
+        private static string PathToAssets()
         {
             var path = System.IO.Directory.GetCurrentDirectory().Split(backslash[0]);
             System.Array.Resize(ref path, path.Length - 2);
 
-            var newPath = string.Join(backslash.ToString(), path) + backslash + "Assets" + backslash + "Pictures";
+            var newPath = string.Join(backslash.ToString(), path) + backslash + "Assets";
 
             return newPath;
+        }
+
+        public static string PathToPictures()
+        {
+            return PathToAssets() + backslash + "Pictures";
+        }
+
+        public static string PathToSounds()
+        {
+            return PathToAssets() + backslash + "Sounds";
         }
     }
 }

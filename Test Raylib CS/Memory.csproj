@@ -164,6 +164,7 @@
     <Content Include="Assets\Pictures\willdabeast\round-shield.png" />
     <Content Include="Assets\Pictures\willdabeast\trench-assault.png" />
     <Content Include="Assets\Pictures\willdabeast\white-book.png" />
+    <Content Include="Assets\Sounds\buttonsound.wav" />
     <Content Include="raylib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
