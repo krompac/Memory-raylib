@@ -1,5 +1,5 @@
 ﻿using Raylib;
-using System.Linq;
+using System.Media;
 using static Raylib.Raylib;
 
 namespace Memory
@@ -7,14 +7,12 @@ namespace Memory
     class Button : UI_Element
     {
         private string text;
-        private Sound buttonSound;
+        private static readonly SoundPlayer player = new SoundPlayer(Program.ButtonSound);
 
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)
         {
             this.Window = window;
             this.text = text;
-            var pathToSound = System.IO.Directory.GetFiles(Program.PathToSounds()).FirstOrDefault();
-            buttonSound = LoadSound(pathToSound);
         }
 
         public override void DrawMe()
@@ -29,7 +27,7 @@ namespace Memory
 
             if (isClicked)
             {
-                PlaySound(buttonSound);
+                player.Play();
             }
 
             return isClicked;

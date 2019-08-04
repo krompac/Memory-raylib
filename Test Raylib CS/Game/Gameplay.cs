@@ -161,7 +161,7 @@ namespace Memory
                     if (!playerChanged && Players.Count > 0)
                     {
                         currentPlayerIndex = currentPlayerIndex + 1 < Players.Count ? currentPlayerIndex + 1 : 0;
-                        memCards.ForEach(card => card.SetColor(Players[currentPlayerIndex].MyColor));
+                        memCards.ForEach(card => card.Color = Players[currentPlayerIndex].MyColor);
                         playerChanged = true;
                     }
 

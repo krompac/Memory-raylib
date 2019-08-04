@@ -1,19 +1,20 @@
-﻿using Raylib; 
-using static Raylib.Raylib;
+﻿using System;
 using System.Linq;
+using System.IO;
+using static Raylib.Raylib;
 
 namespace Memory
 {
     class Program
     {
         static string backslash = ((char)92).ToString();
+        public static string ButtonSound { get; private set; }
 
         static void Main(string[] args)
         {
             InitWindow(640, 480, "Memory");
-            InitAudioDevice();
+            ButtonSound = Directory.GetFiles(Program.PathToSounds()).FirstOrDefault();
             SetWindowIcon(LoadImage(GetIconPath()));
-
             #region drawLetterTest
             //var imageText = ImageText("k", 10, Color.WHITE);
             //var rect = new Rectangle(100, 100, 5, 10);
@@ -39,15 +40,15 @@ namespace Memory
             gameManager.GameLoop();
 
             CloseWindow();
-            CloseAudioDevice();
-            System.Environment.Exit(1);
+
+            Environment.Exit(1);
         }
 
         static string GetIconPath()
         {
             var picturesPath = PathToPictures() + backslash + "icon";
 
-            return System.IO.Directory.GetFiles(picturesPath).FirstOrDefault();
+            return Directory.GetFiles(picturesPath).FirstOrDefault();
         }
 
         public static string GetCardsPath()
@@ -57,8 +58,8 @@ namespace Memory
 
         private static string PathToAssets()
         {
-            var path = System.IO.Directory.GetCurrentDirectory().Split(backslash[0]);
-            System.Array.Resize(ref path, path.Length - 2);
+            var path = Directory.GetCurrentDirectory().Split(backslash[0]);
+            Array.Resize(ref path, path.Length - 2);
 
             var newPath = string.Join(backslash.ToString(), path) + backslash + "Assets";
 

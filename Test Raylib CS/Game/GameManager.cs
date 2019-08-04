@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using Raylib;
@@ -25,7 +25,6 @@ namespace Memory
             while (!WindowShouldClose())
             {
                 BeginDrawing();
-
                 ClearBackground(Color.BLACK);
 
                 switch (gameWindow)
@@ -48,15 +47,12 @@ namespace Memory
                     case GameWindow.Options:
                         break;
                     case GameWindow.Quit:
-                        EndDrawing();
-                        CloseWindow();
-                        Environment.Exit(1);
+                        ExitGame();
                         break;
                 }
 
                 EndDrawing();
-
-                System.Threading.Thread.Sleep(10);
+                Thread.Sleep(10);
             }
         }
 
@@ -84,6 +80,14 @@ namespace Memory
             gameWindow = GameWindow.Menu;
 
             gameplay = new Gameplay();
+        }
+
+        private void ExitGame()
+        {
+            Thread.Sleep(500);
+            EndDrawing();
+            CloseWindow();
+            Environment.Exit(1);
         }
 
         private void DrawWindowWithButtons(List<Button> buttons)
@@ -144,7 +148,7 @@ namespace Memory
                 int buttonPosition = playersButtons.IndexOf(pressedButton);
                 gameplay.InitializeMainGame();
                 InitializePlayers(buttonPosition);
-                System.Threading.Thread.Sleep(500);
+                Thread.Sleep(500);
             }
 
             DrawToMenu();

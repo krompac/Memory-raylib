@@ -12,6 +12,13 @@ namespace Memory
         private Vector2 position;
         public int CardID { get; private set; }
         public bool IsFound { get; set; }
+        public Color Color
+        {
+            set
+            {
+                this.color = value;
+            }
+        }
 
         public Card(int x, int y, int w, int h, int cardId, string fileName = "") : base(x, y, w, h)
         {
@@ -38,11 +45,6 @@ namespace Memory
             {
                 DrawTextureEx(image, position, 0, 0.1f, Color.WHITE);
             }
-        }
-
-        public void SetColor(Color color)
-        {
-            this.color = color;
         }
 
         public override bool CheckIfClicked()
