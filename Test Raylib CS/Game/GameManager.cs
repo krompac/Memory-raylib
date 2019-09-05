@@ -93,14 +93,13 @@ namespace Memory
         private void DrawWindowWithButtons(List<Button> buttons)
         {
             buttons.ForEach(button => button.DrawMe());
-
-            foreach (var item in buttons)
+            buttons.ForEach(button =>
             {
-                if (item.CheckIfClicked())
+                if (button.CheckIfClicked())
                 {
-                    gameWindow = item.Window;
+                    gameWindow = button.Window;
                 }
-            }
+            });
         }
 
         private void DrawToMenu()
@@ -145,9 +144,9 @@ namespace Memory
             if (pressedButton != null)
             {
                 gameWindow = pressedButton.Window;
-                int buttonPosition = playersButtons.IndexOf(pressedButton);
+                int numberOfPlayers = playersButtons.IndexOf(pressedButton);
                 gameplay.InitializeMainGame();
-                InitializePlayers(buttonPosition);
+                InitializePlayers(numberOfPlayers);
                 Thread.Sleep(500);
             }
 

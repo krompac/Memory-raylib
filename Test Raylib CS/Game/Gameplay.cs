@@ -9,7 +9,7 @@ namespace Memory
 {
     class Gameplay
     {
-        private bool playerChanged;
+        //private bool playerChanged;
         private int resetTimer;
         private int lastTimeFrame;
         private List<Card> memCards;
@@ -80,7 +80,8 @@ namespace Memory
             }
 
             currentPlayerIndex = 0;
-            playerChanged = false;
+            Card.NumberOfOpenCards = 0;
+            //playerChanged = false;
         }
 
         public bool CheckIfWon()
@@ -106,7 +107,7 @@ namespace Memory
         {
             resetTimer = 0;
             lastTimeFrame = 0;
-            playerChanged = false;
+            //playerChanged = false;
         }
 
         private void ResetCards()
@@ -129,20 +130,23 @@ namespace Memory
                 Players.ForEach(player => player.DrawMe(currentPlayerIndex));
             }
 
-            if (firstOpenedCard == null)
+            if (Card.NumberOfOpenCards < 2 || Players.Count == 1)
             {
-                firstOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
-            }
-            else
-            {
-                lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
-
-                if (lastOpenedCard == firstOpenedCard)
+                if (firstOpenedCard == null)
                 {
-                    lastOpenedCard = null;
-                    memCards.Where(card => card != firstOpenedCard).ToList().ForEach(card => card.ResetMe());
-                    Card.NumberOfOpenCards = 1;
-                    ResetCounters();
+                    firstOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+                }
+                else
+                {
+                    lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+
+                    if (lastOpenedCard == firstOpenedCard)
+                    {
+                        lastOpenedCard = null;
+                        memCards.Where(card => card != firstOpenedCard).ToList().ForEach(card => card.ResetMe());
+                        Card.NumberOfOpenCards = 1;
+                        ResetCounters();
+                    }
                 }
             }
 
@@ -158,19 +162,18 @@ namespace Memory
                 }
                 else
                 {
-                    if (!playerChanged && Players.Count > 0)
-                    {
-                        currentPlayerIndex = currentPlayerIndex + 1 < Players.Count ? currentPlayerIndex + 1 : 0;
-                        memCards.ForEach(card => card.Color = Players[currentPlayerIndex].MyColor);
-                        playerChanged = true;
-                    }
-
                     if (resetTimer == 3)
                     {
                         memCards.ForEach(card => card.ResetMe());
                         Card.NumberOfOpenCards = 0;
                         ResetCounters();
                         ResetCards();
+
+                        if (Players.Count > 0)
+                        {
+                            currentPlayerIndex = currentPlayerIndex + 1 < Players.Count ? currentPlayerIndex + 1 : 0;
+                            memCards.ForEach(card => card.Color = Players[currentPlayerIndex].MyColor);
+                        }
                     }
                     else if (lastTimeFrame > 0 && DateTime.Now.Second - lastTimeFrame >= 1)
                     {
@@ -183,7 +186,7 @@ namespace Memory
                     }
                 }
             }
-            else if (lastOpenedCard != null && Card.NumberOfOpenCards > 2)
+            else if (Players.Count == 1 && lastOpenedCard != null && Card.NumberOfOpenCards > 2)
             {
                 memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
                 Card.NumberOfOpenCards = 1;
