@@ -31,11 +31,11 @@ namespace Memory
                 {
                     case GameWindow.Menu:
                         DrawWindowWithButtons(menuItems);
-                        SoundManager.Instance.PlayMainSound();
+                        SoundManager.Instance.PlayTheme();
                         break;
                     case GameWindow.PlayerSelect:
                         DrawPlayerSelectionMenu();
-                        SoundManager.Instance.PlayMainSound();
+                        SoundManager.Instance.PlayTheme();
                         break;
                     case GameWindow.Game:
                         DrawToMenu();
@@ -47,6 +47,7 @@ namespace Memory
                         }
                         break;
                     case GameWindow.Options:
+                        DrawToMenu();
                         break;
                     case GameWindow.Quit:
                         ExitGame();

@@ -15,7 +15,7 @@ namespace Memory
         static void Main(string[] args)
         {
             InitWindow(640, 480, "Memory");
-            ReadSoundPaths();
+            InitializeSoundFilePaths();
 
             SetWindowIcon(LoadImage(GetIconPath()));
             #region drawLetterTest
@@ -48,11 +48,11 @@ namespace Memory
             Environment.Exit(1);
         }
 
-        private static void ReadSoundPaths()
+        private static void InitializeSoundFilePaths()
         {
-            var sounds = Directory.GetFiles(Program.PathToSounds());
-            ButtonSound = sounds[0];
-            ThemeSound = sounds[1];
+            var soundPaths = Directory.GetFiles(Program.PathToSounds());
+            ButtonSound = soundPaths[0];
+            ThemeSound = soundPaths[1];
         }
         private static string GetIconPath()
         {

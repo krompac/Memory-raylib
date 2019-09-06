@@ -37,13 +37,13 @@ namespace Memory
             themeSoundPlayer.Init(new WaveFileReader(Program.ThemeSound));
         }
 
-        public void PlayButtonSound()
+        public void ButtonClick()
         {
             buttonSoundPlayer.Play();
             buttonFileReader.Position = 0;
         }
 
-        public void PlayMainSound()
+        public void PlayTheme()
         {
             if (themeSoundPlayer.PlaybackState != PlaybackState.Playing)
             {

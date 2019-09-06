@@ -25,7 +25,7 @@ namespace Memory
 
             if (isClicked)
             {
-                SoundManager.Instance.PlayButtonSound();
+                SoundManager.Instance.ButtonClick();
             }
 
             return isClicked;
