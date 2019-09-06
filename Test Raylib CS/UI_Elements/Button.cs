@@ -1,5 +1,4 @@
 ﻿using Raylib;
-using System.Media;
 using static Raylib.Raylib;
 
 namespace Memory
@@ -7,7 +6,6 @@ namespace Memory
     class Button : UI_Element
     {
         private string text;
-        private static readonly SoundPlayer player = new SoundPlayer(Program.ButtonSound);
 
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)
         {
@@ -27,7 +25,7 @@ namespace Memory
 
             if (isClicked)
             {
-                player.Play();
+                SoundManager.Instance.PlayButtonSound();
             }
 
             return isClicked;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
+using NAudio.Wave;
 using static Raylib.Raylib;
 
 namespace Memory
@@ -9,11 +10,13 @@ namespace Memory
     {
         static string backslash = ((char)92).ToString();
         public static string ButtonSound { get; private set; }
+        public static string ThemeSound { get; private set; }
 
         static void Main(string[] args)
         {
             InitWindow(640, 480, "Memory");
-            ButtonSound = Directory.GetFiles(Program.PathToSounds()).FirstOrDefault();
+            ReadSoundPaths();
+
             SetWindowIcon(LoadImage(GetIconPath()));
             #region drawLetterTest
             //var imageText = ImageText("k", 10, Color.WHITE);
@@ -39,12 +42,19 @@ namespace Memory
             var gameManager = new GameManager();
             gameManager.GameLoop();
 
+
             CloseWindow();
 
             Environment.Exit(1);
         }
 
-        static string GetIconPath()
+        private static void ReadSoundPaths()
+        {
+            var sounds = Directory.GetFiles(Program.PathToSounds());
+            ButtonSound = sounds[0];
+            ThemeSound = sounds[1];
+        }
+        private static string GetIconPath()
         {
             var picturesPath = PathToPictures() + backslash + "icon";
 
