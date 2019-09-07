@@ -11,6 +11,7 @@ namespace Memory
         static string backslash = ((char)92).ToString();
         public static string ButtonSound { get; private set; }
         public static string ThemeSound { get; private set; }
+        public static string GameplaySound { get; private set; }
 
         static void Main(string[] args)
         {
@@ -42,7 +43,6 @@ namespace Memory
             var gameManager = new GameManager();
             gameManager.GameLoop();
 
-
             CloseWindow();
 
             Environment.Exit(1);
@@ -51,9 +51,11 @@ namespace Memory
         private static void InitializeSoundFilePaths()
         {
             var soundPaths = Directory.GetFiles(Program.PathToSounds());
-            ButtonSound = soundPaths[0];
-            ThemeSound = soundPaths[1];
+            GameplaySound = soundPaths[0];
+            ButtonSound = soundPaths[1];
+            ThemeSound = soundPaths[2];
         }
+
         private static string GetIconPath()
         {
             var picturesPath = PathToPictures() + backslash + "icon";

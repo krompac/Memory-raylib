@@ -31,15 +31,14 @@ namespace Memory
                 {
                     case GameWindow.Menu:
                         DrawWindowWithButtons(menuItems);
-                        SoundManager.Instance.PlayTheme();
+                        SoundManager.Instance.MenuTheme();
                         break;
                     case GameWindow.PlayerSelect:
                         DrawPlayerSelectionMenu();
-                        SoundManager.Instance.PlayTheme();
                         break;
                     case GameWindow.Game:
-                        DrawToMenu();
                         gameplay.DrawGameplay(ref gameWindow);
+                        SoundManager.Instance.GameplayTheme();
 
                         if (gameplay.CheckIfWon())
                         {
@@ -47,11 +46,15 @@ namespace Memory
                         }
                         break;
                     case GameWindow.Options:
-                        DrawToMenu();
                         break;
                     case GameWindow.Quit:
                         ExitGame();
                         break;
+                }
+
+                if (gameWindow != GameWindow.Menu && gameWindow != GameWindow.Quit)
+                {
+                    DrawToMenu();
                 }
 
                 EndDrawing();
@@ -110,6 +113,11 @@ namespace Memory
             toMenu.DrawMe();
             if (toMenu.CheckIfClicked())
             {
+                if (gameWindow == GameWindow.Game)
+                {
+                    SoundManager.Instance.ResetReadersPosition();
+                }
+
                 gameWindow = toMenu.Window;
             }
         }
@@ -152,8 +160,6 @@ namespace Memory
                 InitializePlayers(numberOfPlayers);
                 Thread.Sleep(500);
             }
-
-            DrawToMenu();
         }
     }
 }

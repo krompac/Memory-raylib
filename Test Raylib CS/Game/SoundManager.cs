@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 
 namespace Memory
 {
     class SoundManager
     {
         private readonly WaveOutEvent buttonSoundPlayer = new WaveOutEvent();
-        private readonly WaveOutEvent themeSoundPlayer = new WaveOutEvent();
+        private readonly WaveOutEvent menuSoundPlayer = new WaveOutEvent();
+        private readonly WaveOutEvent gameplaySoundPlayer = new WaveOutEvent();
         private readonly WaveFileReader buttonFileReader = new WaveFileReader(Program.ButtonSound);
-        private readonly WaveFileReader themeFileReader = new WaveFileReader(Program.ThemeSound);
+        private readonly WaveFileReader menuFileReader = new WaveFileReader(Program.ThemeSound);
+        private readonly WaveFileReader gameplayFileReader = new WaveFileReader(Program.GameplaySound);
 
-
-        public static SoundManager instance = null;
-
+        private static SoundManager instance = null;
+        
         public static SoundManager Instance
         {
             get
@@ -34,20 +30,50 @@ namespace Memory
         public void Init()
         {
             buttonSoundPlayer.Init(buttonFileReader);
-            themeSoundPlayer.Init(new WaveFileReader(Program.ThemeSound));
+            menuSoundPlayer.Init(menuFileReader);
+            gameplaySoundPlayer.Init(gameplayFileReader);
+
+            menuSoundPlayer.PlaybackStopped += SoundPlayerPlaybackStopped; 
+            gameplaySoundPlayer.PlaybackStopped += SoundPlayerPlaybackStopped;
+        }
+
+        private void SoundPlayerPlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            ResetReadersPosition();
+        }
+
+        public void ResetReadersPosition()
+        {
+            menuFileReader.Position = 0;
+            gameplayFileReader.Position = 0;
         }
 
         public void ButtonClick()
         {
-            buttonSoundPlayer.Play();
             buttonFileReader.Position = 0;
+            buttonSoundPlayer.Play();
         }
 
-        public void PlayTheme()
+        public void MenuTheme()
         {
-            if (themeSoundPlayer.PlaybackState != PlaybackState.Playing)
+            PlayTheme(menuSoundPlayer, gameplaySoundPlayer);
+        }
+
+        public void GameplayTheme()
+        {
+            PlayTheme(gameplaySoundPlayer, menuSoundPlayer);
+        }
+
+        private void PlayTheme(WaveOutEvent mainPlayer, WaveOutEvent otherPlayer)
+        {
+            if (otherPlayer.PlaybackState == PlaybackState.Playing)
             {
-                themeSoundPlayer.Play();
+                otherPlayer.Pause();
+            }
+
+            if (mainPlayer.PlaybackState != PlaybackState.Playing)
+            {
+                mainPlayer.Play();
             }
         }
     }
