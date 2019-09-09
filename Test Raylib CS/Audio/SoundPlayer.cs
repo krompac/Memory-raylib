@@ -6,11 +6,23 @@ namespace Memory
     {
         protected readonly WaveOutEvent player;
         protected readonly WaveFileReader fileReader;
+        protected bool muteMe;
         
         public SoundPlayer(string pathToSound)
         {
             player = new WaveOutEvent();
             fileReader = new WaveFileReader(pathToSound);
+            muteMe = false;
+        }
+
+        public virtual void Mute()
+        {
+            muteMe = true;
+        }
+
+        public virtual void UnMute()
+        {
+            muteMe = false;
         }
 
         public virtual void Init()
@@ -20,7 +32,10 @@ namespace Memory
 
         public void Play()
         {
-            player.Play();
+            if (!muteMe)
+            {
+                player.Play();
+            }
         }
 
         public void ResetPosition()

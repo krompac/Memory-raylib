@@ -14,6 +14,7 @@ namespace Memory
         private Button toMenu;
         private GameWindow gameWindow;
         private Gameplay gameplay;
+        private OptionsManager optionsManager = new OptionsManager();
 
         public GameManager()
         {
@@ -46,6 +47,7 @@ namespace Memory
                         }
                         break;
                     case GameWindow.Options:
+                        optionsManager.DrawMe();
                         break;
                     case GameWindow.Quit:
                         ExitGame();

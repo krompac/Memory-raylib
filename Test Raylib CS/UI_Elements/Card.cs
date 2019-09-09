@@ -12,6 +12,7 @@ namespace Memory
         private Vector2 position;
         public int CardID { get; private set; }
         public bool IsFound { get; set; }
+
         public Color Color
         {
             set

@@ -43,6 +43,11 @@ namespace Memory
             return Directory.GetFiles(picturesPath).FirstOrDefault();
         }
 
+        public static string GetCheckMarkPath()
+        {
+            return Directory.GetFiles(PathToPictures() + backslash + "checkmark").FirstOrDefault();
+        }
+
         public static string GetCardsPath()
         {
             return PathToPictures() + backslash + "willdabeast";

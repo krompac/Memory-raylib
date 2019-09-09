@@ -6,6 +6,7 @@ namespace Memory
     class Button : UI_Element
     {
         private string text;
+        public GameWindow Window { get; private set; }
 
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)
         {
@@ -30,7 +31,5 @@ namespace Memory
 
             return isClicked;
         }
-
-        public GameWindow Window { get; private set; }
     }
 }

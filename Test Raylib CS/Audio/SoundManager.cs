@@ -23,12 +23,46 @@ namespace Memory
                 return instance;
             }
         }
-
+        
         public void Init()
         {
             buttonSoundPlayer.Init();
             menuSoundPlayer.Init();
             gameplaySoundPlayer.Init();
+        }
+
+        public void MuteSounds()
+        {
+            buttonSoundPlayer.Mute();
+        }
+
+        public void MuteMusic()
+        {
+            menuSoundPlayer.Mute();
+            gameplaySoundPlayer.Mute();
+        }
+
+        public void MuteAll()
+        {
+            MuteSounds();
+            MuteMusic();
+        }
+
+        public void UnMuteSounds()
+        {
+            buttonSoundPlayer.UnMute();
+        }
+
+        public void UnMuteMusic()
+        {
+            menuSoundPlayer.UnMute();
+            gameplaySoundPlayer.UnMute();
+        }
+
+        public void UnMuteAll()
+        {
+            UnMuteSounds();
+            UnMuteMusic();
         }
 
         public void ResetMusic()

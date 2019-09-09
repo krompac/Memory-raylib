@@ -5,6 +5,9 @@ namespace Memory
 {
     class UI_Element
     {
+        protected Rectangle rect;
+        protected Color color;
+
         public UI_Element(int x, int y, int w, int h)
         {
             rect = new Rectangle(x - (w / 2), y, w, h);
@@ -26,8 +29,5 @@ namespace Memory
             this.DrawMe();
             DrawRectangleLinesEx(rect, lineThicknes, lineColor);
         }
-
-        protected Rectangle rect;
-        protected Color color;
     }
 }
