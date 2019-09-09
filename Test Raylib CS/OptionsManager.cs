@@ -16,7 +16,7 @@ namespace Memory
         {
             var xPos = 550;
             var yPos = 300;
-            var text = new Text(xPos - 50, yPos - 28, 25, "Mute all?");
+            var text = new Text(xPos - 200, yPos + 7, 35, "Mute all?");
             muteAllOption = new MuteOption(SoundManager.Instance.MuteAll, SoundManager.Instance.UnMuteAll, text, xPos, yPos, 50, 50);
         }
 
