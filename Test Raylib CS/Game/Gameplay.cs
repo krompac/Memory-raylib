@@ -9,7 +9,6 @@ namespace Memory
 {
     class Gameplay
     {
-        //private bool playerChanged;
         private int resetTimer;
         private int lastTimeFrame;
         private List<Card> memCards;
@@ -28,6 +27,19 @@ namespace Memory
 
         public void InitializeMainGame()
         {
+            firstOpenedCard = null;
+            lastOpenedCard = null;
+
+            resetTimer = 0;
+            lastTimeFrame = 0;
+
+            InitializeCards();
+
+            currentPlayerIndex = 0;
+        }
+
+        private void InitializeCards()
+        {
             memCards = new List<Card>();
 
             int startinXPos = 110;
@@ -35,17 +47,11 @@ namespace Memory
             int x = startinXPos;
             int y = 20;
 
-            firstOpenedCard = null;
-            lastOpenedCard = null;
-
-            resetTimer = 0;
-            lastTimeFrame = 0;
-
             Dictionary<string, int> images = new Dictionary<string, int>();
 
             var imageList = Directory.GetFiles(Program.GetCardsPath()).ToList();
             var smallList = new List<string>();
-                        
+
             Random random = new Random();
             int j = 0;
             string randomPicture = "";
@@ -79,9 +85,7 @@ namespace Memory
                 }
             }
 
-            currentPlayerIndex = 0;
             Card.NumberOfOpenCards = 0;
-            //playerChanged = false;
         }
 
         public bool CheckIfWon()
@@ -99,7 +103,7 @@ namespace Memory
             if (gameWonButton.CheckIfClicked())
             {
                 gameWindow = gameWonButton.Window;
-                InitializeMainGame();
+                //InitializeMainGame();
             }
         }
 
@@ -107,7 +111,6 @@ namespace Memory
         {
             resetTimer = 0;
             lastTimeFrame = 0;
-            //playerChanged = false;
         }
 
         private void ResetCards()
@@ -130,6 +133,12 @@ namespace Memory
                 Players.ForEach(player => player.DrawMe(currentPlayerIndex));
             }
 
+            CheckForOpenCards();
+            HandleOpenCards();
+        }
+
+        private void CheckForOpenCards()
+        {
             if (Card.NumberOfOpenCards < 2 || Players.Count == 1)
             {
                 if (firstOpenedCard == null)
@@ -149,7 +158,10 @@ namespace Memory
                     }
                 }
             }
+        }
 
+        private void HandleOpenCards()
+        {
             if (Card.NumberOfOpenCards == 2)
             {
                 if (CheckMatchedCard())

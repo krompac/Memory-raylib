@@ -19,27 +19,7 @@ namespace Memory
             InitializeSoundFilePaths();
 
             SetWindowIcon(LoadImage(GetIconPath()));
-            #region drawLetterTest
-            //var imageText = ImageText("k", 10, Color.WHITE);
-            //var rect = new Rectangle(100, 100, 5, 10);
-
-            //var nekaj = LoadTextureFromImage(imageText);
-
-            //while (!WindowShouldClose())
-            //{
-            //BeginDrawing();
-
-            //ClearBackground(Color.BLACK);
-            //    DrawRectangleRec(rect, Color.ORANGE);
-            //    DrawText("k", 100, 100, 10, Color.WHITE);
-
-
-            //EndDrawing();
-
-            //    System.Threading.Thread.Sleep(10);
-            //}
-            #endregion
-
+            
             var gameManager = new GameManager();
             gameManager.GameLoop();
 
@@ -73,7 +53,7 @@ namespace Memory
             var path = Directory.GetCurrentDirectory().Split(backslash[0]);
             Array.Resize(ref path, path.Length - 2);
 
-            var newPath = string.Join(backslash.ToString(), path) + backslash + "Assets";
+            var newPath = string.Join(backslash, path) + backslash + "Assets";
 
             return newPath;
         }

@@ -122,10 +122,10 @@ namespace Memory
             }
         }
 
-        private void InitializePlayers(int buttonPosition)
+        private void InitializePlayers(int buttonIndex)
         {
             var players = new List<Player>();
-            switch (buttonPosition)
+            switch (buttonIndex)
             {
                 case 3:
                     players.Add(new Player("Player4", Color.ORANGE, 3));
@@ -155,9 +155,9 @@ namespace Memory
             if (pressedButton != null)
             {
                 gameWindow = pressedButton.Window;
-                int numberOfPlayers = playersButtons.IndexOf(pressedButton);
+                int buttonIndex = playersButtons.IndexOf(pressedButton);
                 gameplay.InitializeMainGame();
-                InitializePlayers(numberOfPlayers);
+                InitializePlayers(buttonIndex);
                 Thread.Sleep(500);
             }
         }
