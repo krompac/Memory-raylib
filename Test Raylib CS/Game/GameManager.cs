@@ -115,7 +115,7 @@ namespace Memory
             {
                 if (gameWindow == GameWindow.Game)
                 {
-                    SoundManager.Instance.ResetReadersPosition();
+                    SoundManager.Instance.ResetMusic();
                 }
 
                 gameWindow = toMenu.Window;

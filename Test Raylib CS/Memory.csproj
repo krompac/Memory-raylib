@@ -79,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Player.cs" />
-    <Compile Include="Game\SoundManager.cs" />
+    <Compile Include="Audio\SoundManager.cs" />
+    <Compile Include="Audio\MusicPlayer.cs" />
+    <Compile Include="Audio\SoundPlayer.cs" />
     <Compile Include="UI_Elements\Button.cs" />
     <Compile Include="UI_Elements\Card.cs" />
     <Compile Include="Game\GameManager.cs" />
