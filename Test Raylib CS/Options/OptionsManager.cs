@@ -11,6 +11,7 @@ namespace Memory
     class OptionsManager
     {
         private MuteOption muteAllOption;
+        private TrackBar trackBar;
 
         public OptionsManager()
         {
@@ -18,11 +19,13 @@ namespace Memory
             var yPos = 300;
             var text = new Text(xPos - 200, yPos + 7, 35, "Mute all?");
             muteAllOption = new MuteOption(SoundManager.Instance.MuteAll, SoundManager.Instance.UnMuteAll, text, xPos, yPos, 50, 50);
+
+            trackBar = new TrackBar(100, 100, 200, 7, Color.ORANGE, Color.MAGENTA);
         }
 
         public void DrawMe()
         {
-            //DrawOptionsText();
+            DrawOptionsText();
             muteAllOption.DrawMe();
             muteAllOption.CheckIfClicked();
         }
@@ -35,6 +38,12 @@ namespace Memory
 
             DrawText("Sound volume", xPos, yPos, fontSize, Color.RAYWHITE);
             DrawText("TEST", xPos, yPos - 25, fontSize, Color.RED);
+            
+            //DrawRectangle(xPos, yPos + 50, 200, 7, Color.ORANGE);
+            //DrawRectangle(xPos + 60, yPos + 48, 5, 11, Color.MAGENTA);
+            trackBar.DrawMe();
+            trackBar.CheckIfClicked();
+            trackBar.DragTracker();
         }
     }
 }

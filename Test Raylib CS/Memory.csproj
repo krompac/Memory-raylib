@@ -82,8 +82,9 @@
     <Compile Include="Audio\SoundManager.cs" />
     <Compile Include="Audio\MusicPlayer.cs" />
     <Compile Include="Audio\SoundPlayer.cs" />
-    <Compile Include="MuteOption.cs" />
-    <Compile Include="OptionsManager.cs" />
+    <Compile Include="Options\MuteOption.cs" />
+    <Compile Include="Options\OptionsManager.cs" />
+    <Compile Include="Options\SoundOption.cs" />
     <Compile Include="UI_Elements\Button.cs" />
     <Compile Include="UI_Elements\Card.cs" />
     <Compile Include="Game\GameManager.cs" />
@@ -103,6 +104,8 @@
     <Compile Include="Raylib-CS\Raylib.cs" />
     <Compile Include="Raylib-CS\Raymath.cs" />
     <Compile Include="UI_Elements\Text.cs" />
+    <Compile Include="UI_Elements\TrackBar.cs" />
+    <Compile Include="UI_Elements\Tracker.cs" />
     <Compile Include="UI_Elements\UI_Element.cs" />
   </ItemGroup>
   <ItemGroup>

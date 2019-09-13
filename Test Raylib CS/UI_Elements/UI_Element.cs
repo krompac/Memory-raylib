@@ -14,6 +14,12 @@ namespace Memory
             color = Color.BLUE;
         }
 
+        public UI_Element(int x, int y, int w, int h, Color color) : this(x, y, w, h)
+        {
+            rect.x = x;
+            this.color = color;
+        }
+
         public virtual void DrawMe()
         {
             DrawRectangleRec(rect, color);
