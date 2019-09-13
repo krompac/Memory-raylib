@@ -13,6 +13,10 @@ namespace Memory
             {
                 rect.x = value;
             }
+            get
+            {
+                return (int)rect.x;
+            }
         }
 
         public Tracker(int x, int y, int w, int h, Color color) : base(x, y, w, h, color)

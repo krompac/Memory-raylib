@@ -11,16 +11,26 @@ namespace Memory
     class TrackBar : UI_Element
     {
         private Tracker tracker;
+        private float volume;
 
-        public TrackBar(int x, int y, int w, int h, Color barColor, Color trackerColor) : base(x, y, w, h, barColor)
+        public delegate void UpdateVolume(float volume);
+        private readonly UpdateVolume update;
+
+        public TrackBar(int x, int y, int w, int h, Color barColor, Color trackerColor, UpdateVolume updateVolume) 
+            : base(x, y, w, h, barColor)
         {
-            tracker = new Tracker(x, y - 2, w / 40, h + 4, trackerColor);
+            tracker = new Tracker(x + w, y - 2, w / 40, h + 4, trackerColor);
+            volume = 0;
+            update = updateVolume;
         }
 
         public override void DrawMe()
         {
             base.DrawMe();
             tracker.DrawMe();
+
+            var vol = (int)(volume + 0.5);
+            DrawText(vol.ToString(), (int)rect.x, (int)rect.y - 26, 25, Color.GOLD);
         }
 
         public override bool CheckIfClicked()
@@ -38,6 +48,8 @@ namespace Memory
         public void DragTracker()
         {
             tracker.DragMe((int)rect.x, (int)(rect.x + rect.width));
+            volume = (tracker.XPos - rect.x) / (rect.width / 100.0f);
+            update.Invoke(volume);
         }
     }
 }

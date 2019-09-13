@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Raylib;
-using static Raylib.Raylib;
-
-namespace Memory
+﻿namespace Memory
 {
     class OptionsManager
     {
         private MuteOption muteAllOption;
-        private TrackBar trackBar;
+        public SoundOption musicSounds;
+        public SoundOption buttonSounds;
 
         public OptionsManager()
         {
@@ -20,30 +13,22 @@ namespace Memory
             var text = new Text(xPos - 200, yPos + 7, 35, "Mute all?");
             muteAllOption = new MuteOption(SoundManager.Instance.MuteAll, SoundManager.Instance.UnMuteAll, text, xPos, yPos, 50, 50);
 
-            trackBar = new TrackBar(100, 100, 200, 7, Color.ORANGE, Color.MAGENTA);
+            buttonSounds = new SoundOption("Click sounds", 1, 
+                SoundManager.Instance.MuteSounds, SoundManager.Instance.UnMuteSounds, SoundManager.Instance.UpdateSound);
+            musicSounds = new SoundOption("Music sounds", 2, 
+                SoundManager.Instance.MuteMusic, SoundManager.Instance.UnMuteMusic, SoundManager.Instance.UpdateMusic);
         }
 
         public void DrawMe()
         {
-            DrawOptionsText();
             muteAllOption.DrawMe();
             muteAllOption.CheckIfClicked();
-        }
 
-        public void DrawOptionsText()
-        {
-            int xPos = 100;
-            int yPos = 50;
-            int fontSize = 25;
+            musicSounds.DrawMe();
+            buttonSounds.DrawMe();
 
-            DrawText("Sound volume", xPos, yPos, fontSize, Color.RAYWHITE);
-            DrawText("TEST", xPos, yPos - 25, fontSize, Color.RED);
-            
-            //DrawRectangle(xPos, yPos + 50, 200, 7, Color.ORANGE);
-            //DrawRectangle(xPos + 60, yPos + 48, 5, 11, Color.MAGENTA);
-            trackBar.DrawMe();
-            trackBar.CheckIfClicked();
-            trackBar.DragTracker();
+            musicSounds.HandleMe();
+            buttonSounds.HandleMe();
         }
     }
 }

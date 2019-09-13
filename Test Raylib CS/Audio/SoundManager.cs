@@ -9,7 +9,7 @@ namespace Memory
         private readonly MusicPlayer gameplaySoundPlayer = new MusicPlayer(Program.GameplaySound);
 
         private static SoundManager instance = null;
-        
+
         public static SoundManager Instance
         {
             get
@@ -23,7 +23,22 @@ namespace Memory
                 return instance;
             }
         }
+
+        public void UpdateSound(float value)
+        {
+            value /= 100.0f;
+
+            buttonSoundPlayer.Volume = value;
+        }
         
+        public void UpdateMusic(float value)
+        {
+            value /= 100.0f;
+
+            menuSoundPlayer.Volume = value;
+            gameplaySoundPlayer.Volume = value;
+        }
+
         public void Init()
         {
             buttonSoundPlayer.Init();

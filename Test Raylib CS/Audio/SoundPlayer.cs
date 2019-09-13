@@ -7,12 +7,26 @@ namespace Memory
         protected readonly WaveOutEvent player;
         protected readonly WaveFileReader fileReader;
         protected bool muteMe;
+        string nekaj;
+
+        public float Volume
+        {
+            set
+            {
+                player.Volume = value;
+            }
+            get
+            {
+                return player.Volume;
+            }
+        }
         
         public SoundPlayer(string pathToSound)
         {
             player = new WaveOutEvent();
             fileReader = new WaveFileReader(pathToSound);
             muteMe = false;
+            nekaj = pathToSound;
         }
 
         public virtual void Mute()

@@ -5,7 +5,7 @@ namespace Memory
     class MusicPlayer : SoundPlayer
     {
         private bool wasPlaying;
-
+        
         public MusicPlayer(string pathToMusic) : base(pathToMusic)
         {
             wasPlaying = false;
