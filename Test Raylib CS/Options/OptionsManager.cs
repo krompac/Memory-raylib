@@ -17,7 +17,7 @@
             musicSounds = new SoundOption("Music sounds", 2, SoundManager.Instance.MuteMusic, SoundManager.Instance.UnMuteMusic);
         }
 
-        public void DrawMe()
+        public void HandleMe()
         {
             muteAllOption.DrawMe();
             muteAllOption.CheckIfClicked();

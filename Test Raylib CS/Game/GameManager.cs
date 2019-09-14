@@ -9,15 +9,21 @@ namespace Memory
 {
     class GameManager
     {
+        private int numberOfPlayers;
         private List<Button> menuItems;
         private List<Button> playersButtons;
+        private List<Button> difficultysButtons;
         private Button toMenu;
         private GameWindow gameWindow;
+        private Difficulty chosenDifficulty;
         private Gameplay gameplay;
-        private OptionsManager optionsManager = new OptionsManager();
+        private OptionsManager optionsManager;
 
         public GameManager()
         {
+            numberOfPlayers = 0;
+            gameplay = null;
+            optionsManager = new OptionsManager();
             InitializeGame();
         }
 
@@ -37,6 +43,9 @@ namespace Memory
                     case GameWindow.PlayerSelect:
                         DrawPlayerSelectionMenu();
                         break;
+                    case GameWindow.DifficultySelect:
+                        DrawDifficultySelectionMenu();
+                        break;
                     case GameWindow.Game:
                         gameplay.DrawGameplay(ref gameWindow);
                         SoundManager.Instance.GameplayTheme();
@@ -47,7 +56,7 @@ namespace Memory
                         }
                         break;
                     case GameWindow.Options:
-                        optionsManager.DrawMe();
+                        optionsManager.HandleMe();
                         break;
                     case GameWindow.Quit:
                         ExitGame();
@@ -76,18 +85,21 @@ namespace Memory
 
             yPos = 100;
 
-            var onePlayerButton = new Button(xPos, yPos, 150, 50, "1 player", GameWindow.Game);
-            var twoPlayersButton = new Button(xPos, yPos + yDiff, 150, 50, "2 players", GameWindow.Game);
-            var threePlayersButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "3 players", GameWindow.Game);
-            var fourPlayersButton = new Button(xPos, yPos + yDiff * 3, 150, 50, "4 players", GameWindow.Game);
+            var onePlayerButton = new Button(xPos, yPos, 150, 50, "1 player", GameWindow.DifficultySelect);
+            var twoPlayersButton = new Button(xPos, yPos + yDiff, 150, 50, "2 players", GameWindow.DifficultySelect);
+            var threePlayersButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "3 players", GameWindow.DifficultySelect);
+            var fourPlayersButton = new Button(xPos, yPos + yDiff * 3, 150, 50, "4 players", GameWindow.DifficultySelect);
+
+            var easyButton = new Button(xPos, yPos, 150, 50, "Easy", GameWindow.Game);
+            var mediumButton = new Button(xPos, yPos + yDiff, 150, 50, "Medium", GameWindow.Game);
+            var hardButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Hard", GameWindow.Game);
 
             toMenu = new Button(590, 460, 100, 20, "Back", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             playersButtons = new List<Button> { onePlayerButton, twoPlayersButton, threePlayersButton, fourPlayersButton };
+            difficultysButtons = new List<Button> { easyButton, mediumButton, hardButton };
             gameWindow = GameWindow.Menu;
-
-            gameplay = new Gameplay();
         }
 
         private void ExitGame()
@@ -157,9 +169,23 @@ namespace Memory
             if (pressedButton != null)
             {
                 gameWindow = pressedButton.Window;
-                int buttonIndex = playersButtons.IndexOf(pressedButton);
+                numberOfPlayers = playersButtons.IndexOf(pressedButton);
+            }
+        }
+
+        private void DrawDifficultySelectionMenu()
+        {
+            difficultysButtons.ForEach(button => button.DrawMe());
+            var pressedButton = difficultysButtons.Where(button => button.CheckIfClicked()).FirstOrDefault();
+
+            if (pressedButton != null)
+            {
+                gameWindow = pressedButton.Window;
+                var difficultyIndex = difficultysButtons.IndexOf(pressedButton);
+
+                gameplay = new Gameplay((Difficulty)difficultyIndex);
                 gameplay.InitializeMainGame();
-                InitializePlayers(buttonIndex);
+                InitializePlayers(numberOfPlayers);
                 Thread.Sleep(500);
             }
         }
