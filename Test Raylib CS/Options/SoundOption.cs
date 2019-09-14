@@ -11,7 +11,7 @@ namespace Memory
         private TrackBar trackBar;
         private MuteOption muteOption;
 
-        public SoundOption(string labelText, int index, MuteAction mute, MuteAction unMute, UpdateVolume updateVolume)
+        public SoundOption(string labelText, int index, MuteAction mute, MuteAction unMute)
         {
             int xPos = 200;
             int yPos = 100 * index;
@@ -19,7 +19,7 @@ namespace Memory
             int height = 7;
             int fontSize = 25;
 
-            trackBar = new TrackBar(xPos, yPos, width, height, Color.ORANGE, Color.MAGENTA, updateVolume);
+            trackBar = new TrackBar(xPos, yPos, width, height, Color.ORANGE, Color.MAGENTA);
             label = new Text(xPos - 10 - MeasureText(labelText, fontSize), yPos - fontSize / 2, fontSize, labelText);
 
             var muteText = new Text(xPos + width + 25, yPos - 45, fontSize, "Mute?");
@@ -33,11 +33,15 @@ namespace Memory
             muteOption.DrawMe();
         }
 
-        public void HandleMe()
+        public void CheckIfClicked()
         {
             trackBar.CheckIfClicked();
-            trackBar.DragTracker();
             muteOption.CheckIfClicked();
+        }
+
+        public float UpdateVolume()
+        {
+            return trackBar.DragTracker();
         }
     }
 }

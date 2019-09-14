@@ -13,10 +13,8 @@
             var text = new Text(xPos - 200, yPos + 7, 35, "Mute all?");
             muteAllOption = new MuteOption(SoundManager.Instance.MuteAll, SoundManager.Instance.UnMuteAll, text, xPos, yPos, 50, 50);
 
-            buttonSounds = new SoundOption("Click sounds", 1, 
-                SoundManager.Instance.MuteSounds, SoundManager.Instance.UnMuteSounds, SoundManager.Instance.UpdateSound);
-            musicSounds = new SoundOption("Music sounds", 2, 
-                SoundManager.Instance.MuteMusic, SoundManager.Instance.UnMuteMusic, SoundManager.Instance.UpdateMusic);
+            buttonSounds = new SoundOption("Click sounds", 1, SoundManager.Instance.MuteSounds, SoundManager.Instance.UnMuteSounds);
+            musicSounds = new SoundOption("Music sounds", 2, SoundManager.Instance.MuteMusic, SoundManager.Instance.UnMuteMusic);
         }
 
         public void DrawMe()
@@ -27,8 +25,11 @@
             musicSounds.DrawMe();
             buttonSounds.DrawMe();
 
-            musicSounds.HandleMe();
-            buttonSounds.HandleMe();
+            musicSounds.CheckIfClicked();
+            buttonSounds.CheckIfClicked();
+
+            SoundManager.Instance.UpdateMusic(musicSounds.UpdateVolume());
+            //SoundManager.Instance.UpdateSound(buttonSounds.UpdateVolume());
         }
     }
 }

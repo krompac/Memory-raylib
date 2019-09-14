@@ -28,15 +28,15 @@ namespace Memory
         {
             value /= 100.0f;
 
-            buttonSoundPlayer.Volume = value;
+            buttonSoundPlayer.UpdateVolume(value);
         }
         
         public void UpdateMusic(float value)
         {
             value /= 100.0f;
 
-            menuSoundPlayer.Volume = value;
-            gameplaySoundPlayer.Volume = value;
+            menuSoundPlayer.UpdateVolume(value);
+            gameplaySoundPlayer.UpdateVolume(value);
         }
 
         public void Init()
