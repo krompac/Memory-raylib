@@ -179,6 +179,9 @@
     <Content Include="Assets\Pictures\willdabeast\white-book.png" />
     <Content Include="Assets\Sounds\bensound-memories.wav" />
     <Content Include="Assets\Sounds\buttonsound.wav" />
+    <Content Include="Assets\Sounds\card_click.wav" />
+    <Content Include="Assets\Sounds\card_succes.wav" />
+    <Content Include="Assets\Sounds\game_won.wav" />
     <Content Include="Assets\Sounds\soundtails_-_Dark_Sky_1.wav" />
     <Content Include="raylib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

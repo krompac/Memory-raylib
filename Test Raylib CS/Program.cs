@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using NAudio.Wave;
 using static Raylib.Raylib;
 
 namespace Memory
 {
     class Program
     {
-        static string backslash = ((char)92).ToString();
-        public static string ButtonSound { get; private set; }
-        public static string ThemeSound { get; private set; }
-        public static string GameplaySound { get; private set; }
+        private static readonly string backslash = ((char)92).ToString();
 
         static void Main(string[] args)
         {
             InitWindow(640, 480, "Memory");
-            InitializeSoundFilePaths();
 
             SetWindowIcon(LoadImage(GetIconPath()));
             
@@ -26,14 +21,6 @@ namespace Memory
             CloseWindow();
 
             Environment.Exit(1);
-        }
-
-        private static void InitializeSoundFilePaths()
-        {
-            var soundPaths = Directory.GetFiles(Program.PathToSounds());
-            GameplaySound = soundPaths[0];
-            ButtonSound = soundPaths[1];
-            ThemeSound = soundPaths[2];
         }
 
         private static string GetIconPath()

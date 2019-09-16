@@ -9,6 +9,7 @@ namespace Memory
 {
     class Gameplay
     {
+        private bool gameWonSound;
         private int resetTimer;
         private readonly int maxResetTime;
         private int turnTimer;
@@ -28,12 +29,13 @@ namespace Memory
             gameWonPanel = new UI_Element(325, 110, 480, 220);
             gameWonButton = new Button(280, 220, 100, 50, "Okay", GameWindow.Menu);
 
-            maxResetTime = (int)difficulty + 1;
+            maxResetTime = 3 - (int)difficulty + 1;
             InitGameByDifficulty(difficulty);
         }
 
         public void InitializeMainGame()
         {
+            gameWonSound = true;
             firstOpenedCard = null;
             lastOpenedCard = null;
 
@@ -56,7 +58,7 @@ namespace Memory
                     turnTimer = 3;
                     break;
                 case Difficulty.Hard:
-                    turnTimer = 2;
+                    turnTimer = 1;
                     break;
             }
 
@@ -120,6 +122,12 @@ namespace Memory
 
         public void DrawGameWon(ref GameWindow gameWindow)
         {
+            if (gameWonSound)
+            {
+                SoundManager.Instance.GameWon();
+                gameWonSound = false;
+            }
+
             gameWonPanel.DrawMeWithLines(5, Color.WHITE);
             var winner = Players.OrderBy(player => player.Score).FirstOrDefault();
             DrawText(winner.Name.ToUpper() + " WON", 95, 110, 100, Color.BLACK);
@@ -171,6 +179,11 @@ namespace Memory
                 if (firstOpenedCard == null)
                 {
                     firstOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+
+                    if (firstOpenedCard != null)
+                    {
+                        SoundManager.Instance.OpenCard();
+                    }
                 }
                 else
                 {
@@ -183,6 +196,11 @@ namespace Memory
                         Card.NumberOfOpenCards = 1;
                         ResetCounters();
                     }
+
+                    if (lastOpenedCard != null)
+                    {
+                        SoundManager.Instance.OpenCard();
+                    }
                 }
             }
         }
@@ -193,12 +211,12 @@ namespace Memory
             {
                 if (currentTurnTimeFrame == 0)
                 {
-                    currentTurnTimeFrame = DateTime.Now.Second;
+                    currentTurnTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
                 }
-                else if (DateTime.Now.Second - currentTurnTimeFrame >= 1)
+                else if ((int)DateTime.Now.TimeOfDay.TotalSeconds - currentTurnTimeFrame >= 1)
                 {
                     currentTurnTime++;
-                    currentTurnTimeFrame = DateTime.Now.Second;
+                    currentTurnTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
 
                     if (currentTurnTime == turnTimer)
                     {
@@ -211,6 +229,7 @@ namespace Memory
             {
                 if (CheckMatchedCard())
                 {
+                    SoundManager.Instance.MatchedCard();
                     Players[currentPlayerIndex].Score++;
                     memCards.Where(card => card == firstOpenedCard || card == lastOpenedCard).ToList().ForEach(card => card.IsFound = true);
                     ResetCounters();
@@ -223,14 +242,14 @@ namespace Memory
                     {
                         ResetForNextTurn();
                     }
-                    else if (lastTimeFrame > 0 && DateTime.Now.Second - lastTimeFrame >= 1)
+                    else if (lastTimeFrame > 0 && (int)DateTime.Now.TimeOfDay.TotalSeconds - lastTimeFrame >= 1)
                     {
                         resetTimer++;
-                        lastTimeFrame = DateTime.Now.Second;
+                        lastTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
                     }
                     else
                     {
-                        lastTimeFrame = DateTime.Now.Second;
+                        lastTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
                     }
                 }
             }

@@ -1,7 +1,6 @@
 ﻿using Raylib;
 using static Raylib.Raylib;
 using static Memory.MuteOption;
-using static Memory.TrackBar;
 
 namespace Memory
 {

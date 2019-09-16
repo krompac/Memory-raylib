@@ -4,9 +4,12 @@ namespace Memory
 {
     class SoundManager
     {
-        private readonly SoundPlayer buttonSoundPlayer = new SoundPlayer(Program.ButtonSound);
-        private readonly MusicPlayer menuSoundPlayer = new MusicPlayer(Program.ThemeSound);
-        private readonly MusicPlayer gameplaySoundPlayer = new MusicPlayer(Program.GameplaySound);
+        private readonly SoundPlayer buttonSoundPlayer;
+        private readonly SoundPlayer cardClickSoundPlayer;
+        private readonly SoundPlayer cardMatchedSoundPlayer;
+        private readonly SoundPlayer gameWonSoundPlayer;
+        private readonly MusicPlayer menuMusicPlayer;
+        private readonly MusicPlayer gameplayMusicPlayer;
 
         private static SoundManager instance = null;
 
@@ -24,6 +27,20 @@ namespace Memory
             }
         }
 
+        private SoundManager()
+        {
+            var pathToSounds = System.IO.Directory.GetFiles(Program.PathToSounds());
+            
+            gameplayMusicPlayer = new MusicPlayer(pathToSounds[0]);
+
+            buttonSoundPlayer = new SoundPlayer(pathToSounds[1]);
+            cardClickSoundPlayer = new SoundPlayer(pathToSounds[2]);
+            cardMatchedSoundPlayer = new SoundPlayer(pathToSounds[3]);
+            gameWonSoundPlayer = new SoundPlayer(pathToSounds[4]);
+
+            menuMusicPlayer = new MusicPlayer(pathToSounds[5]);
+        }
+
         public void UpdateSound(float value)
         {
             value /= 100.0f;
@@ -35,15 +52,18 @@ namespace Memory
         {
             value /= 100.0f;
 
-            menuSoundPlayer.UpdateVolume(value);
-            gameplaySoundPlayer.UpdateVolume(value);
+            menuMusicPlayer.UpdateVolume(value);
+            gameplayMusicPlayer.UpdateVolume(value);
         }
 
         public void Init()
         {
             buttonSoundPlayer.Init();
-            menuSoundPlayer.Init();
-            gameplaySoundPlayer.Init();
+            cardClickSoundPlayer.Init();
+            cardMatchedSoundPlayer.Init();
+            gameWonSoundPlayer.Init();
+            menuMusicPlayer.Init();
+            gameplayMusicPlayer.Init();
         }
 
         public void MuteSounds()
@@ -53,8 +73,8 @@ namespace Memory
 
         public void MuteMusic()
         {
-            menuSoundPlayer.Mute();
-            gameplaySoundPlayer.Mute();
+            menuMusicPlayer.Mute();
+            gameplayMusicPlayer.Mute();
         }
 
         public void MuteAll()
@@ -70,8 +90,8 @@ namespace Memory
 
         public void UnMuteMusic()
         {
-            menuSoundPlayer.UnMute();
-            gameplaySoundPlayer.UnMute();
+            menuMusicPlayer.UnMute();
+            gameplayMusicPlayer.UnMute();
         }
 
         public void UnMuteAll()
@@ -82,24 +102,44 @@ namespace Memory
 
         public void ResetMusic()
         {
-            menuSoundPlayer.ResetPosition();
-            gameplaySoundPlayer.ResetPosition();
+            menuMusicPlayer.ResetPosition();
+            gameplayMusicPlayer.ResetPosition();
         }
 
         public void ButtonClick()
         {
-            buttonSoundPlayer.ResetPosition();
-            buttonSoundPlayer.Play();
+            PlaySound(buttonSoundPlayer);
+        }
+
+        public void OpenCard()
+        {
+            PlaySound(cardClickSoundPlayer);    
+        }
+
+        public void MatchedCard()
+        {
+            PlaySound(cardMatchedSoundPlayer);
+        }
+
+        public void GameWon()
+        {
+            PlaySound(gameWonSoundPlayer);
+        }
+
+        private void PlaySound(SoundPlayer player)
+        {
+            player.ResetPosition();
+            player.Play();
         }
 
         public void MenuTheme()
         {
-            PlayTheme(menuSoundPlayer, gameplaySoundPlayer);
+            PlayTheme(menuMusicPlayer, gameplayMusicPlayer);
         }
 
         public void GameplayTheme()
         {
-            PlayTheme(gameplaySoundPlayer, menuSoundPlayer);
+            PlayTheme(gameplayMusicPlayer, menuMusicPlayer);
         }
 
         private void PlayTheme(MusicPlayer mainPlayer, MusicPlayer otherPlayer)
