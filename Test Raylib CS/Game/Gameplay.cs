@@ -58,7 +58,7 @@ namespace Memory
                     turnTimer = 3;
                     break;
                 case Difficulty.Hard:
-                    turnTimer = 1;
+                    turnTimer = 2;
                     break;
             }
 
@@ -67,6 +67,24 @@ namespace Memory
 
         private void InitializeCards()
         {
+            int pictureCount = 15;
+            int rowWidth = 6;
+
+            switch (Players.Count)
+            {
+                case 4:
+                    rowWidth++;
+                    pictureCount += 4;
+                    goto case 3;
+                case 3:
+                    pictureCount += 7;
+                    rowWidth++;
+                    goto case 2;
+                case 2:
+                    pictureCount += 6;
+                    break;
+            }
+
             memCards = new List<Card>();
 
             int startinXPos = 110;
@@ -83,7 +101,7 @@ namespace Memory
             int j = 0;
             string randomPicture = "";
 
-            while (smallList.Count < 15)
+            while (smallList.Count < pictureCount)
             {
                 j = random.Next(imageList.Count);
                 randomPicture = imageList[j];
@@ -104,7 +122,7 @@ namespace Memory
 
                     images[smallList[j]]++;
 
-                    if ((memCards.Count) % 6 == 0)
+                    if ((memCards.Count) % rowWidth == 0)
                     {
                         y += 65;
                         x = startinXPos;
@@ -114,6 +132,12 @@ namespace Memory
 
             Card.NumberOfOpenCards = 0;
         }
+
+        public void UpdatePlayersTextPosition(int width)
+        {
+            Players.ForEach(player => player.TextXpos = width - 140);
+        }
+
 
         public bool CheckIfWon()
         {

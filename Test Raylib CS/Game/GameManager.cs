@@ -9,18 +9,24 @@ namespace Memory
 {
     class GameManager
     {
+        private bool windowSizeChanged;
+        private readonly int windowWidth;
+        private readonly int windowHeight;
         private int numberOfPlayers;
         private List<Button> menuItems;
         private List<Button> playersButtons;
         private List<Button> difficultysButtons;
-        private Button toMenu;
+        private ToMenuButton toMenu;
         private GameWindow gameWindow;
-        private Difficulty chosenDifficulty;
         private Gameplay gameplay;
         private OptionsManager optionsManager;
 
-        public GameManager()
+        public GameManager(int windowWidth, int windowHeight)
         {
+            this.windowWidth = windowWidth;
+            this.windowHeight = windowHeight;
+
+            windowSizeChanged = false;
             numberOfPlayers = 0;
             gameplay = null;
             optionsManager = new OptionsManager();
@@ -94,7 +100,7 @@ namespace Memory
             var mediumButton = new Button(xPos, yPos + yDiff, 150, 50, "Medium", GameWindow.Game);
             var hardButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Hard", GameWindow.Game);
 
-            toMenu = new Button(590, 460, 100, 20, "Back", GameWindow.Menu);
+            toMenu = new ToMenuButton(590, 460, 100, 20, "Back", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             playersButtons = new List<Button> { onePlayerButton, twoPlayersButton, threePlayersButton, fourPlayersButton };
@@ -108,6 +114,35 @@ namespace Memory
             EndDrawing();
             CloseWindow();
             Environment.Exit(1);
+        }
+
+        private void UpdateWindowSize()
+        {
+            if (windowSizeChanged)
+            {
+                var width = windowWidth;
+                var height = windowHeight;
+
+                switch(numberOfPlayers)
+                {
+                    case 3:
+                        width += 60;
+                        goto case 2;
+                    case 2:
+                        height += 60;
+                        width += 60;
+                        goto case 1;
+                    case 1:
+                        height += 60;
+                        break;
+                }
+
+                SetWindowSize(width, height);
+                toMenu.UpdatePosition(width, height);
+                gameplay.UpdatePlayersTextPosition(width);
+
+                windowSizeChanged = false;
+            }
         }
 
         private void DrawWindowWithButtons(List<Button> buttons)
@@ -132,6 +167,13 @@ namespace Memory
                     SoundManager.Instance.ResetMusic();
                 }
 
+                if (numberOfPlayers > 0)
+                {
+                    windowSizeChanged = true;
+                    numberOfPlayers = 0;
+                    UpdateWindowSize();
+                }
+
                 gameWindow = toMenu.Window;
             }
         }
@@ -148,6 +190,7 @@ namespace Memory
                     players.Add(new Player("Player3", Color.GREEN, 2));
                     goto case 1;
                 case 1:
+                    windowSizeChanged = true;
                     players.Add(new Player("Player2", Color.RED, 1));
                     goto case 0;
                 case 0:
@@ -184,9 +227,11 @@ namespace Memory
                 var difficultyIndex = difficultysButtons.IndexOf(pressedButton);
 
                 gameplay = new Gameplay((Difficulty)difficultyIndex);
-                gameplay.InitializeMainGame();
                 InitializePlayers(numberOfPlayers);
+                gameplay.InitializeMainGame();
+
                 Thread.Sleep(500);
+                UpdateWindowSize();
             }
         }
     }

@@ -8,14 +8,17 @@ namespace Memory
     class Program
     {
         private static readonly string backslash = ((char)92).ToString();
+        private static readonly int windowWidth = 640;
+        private static readonly int windowHeight = 480;
 
         static void Main(string[] args)
         {
-            InitWindow(640, 480, "Memory");
+            InitWindow(windowWidth, windowHeight, "Memory");
+            SetWindowMinSize(windowWidth, windowHeight);
 
             SetWindowIcon(LoadImage(GetIconPath()));
             
-            var gameManager = new GameManager();
+            var gameManager = new GameManager(windowWidth, windowHeight);
             gameManager.GameLoop();
 
             CloseWindow();

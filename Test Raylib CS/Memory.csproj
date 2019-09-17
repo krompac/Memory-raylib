@@ -104,6 +104,7 @@
     <Compile Include="Raylib-CS\Raylib.cs" />
     <Compile Include="Raylib-CS\Raymath.cs" />
     <Compile Include="UI_Elements\Text.cs" />
+    <Compile Include="UI_Elements\ToMenuButton.cs" />
     <Compile Include="UI_Elements\TrackBar.cs" />
     <Compile Include="UI_Elements\Tracker.cs" />
     <Compile Include="UI_Elements\UI_Element.cs" />
