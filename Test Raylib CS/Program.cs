@@ -43,6 +43,11 @@ namespace Memory
             return PathToPictures() + backslash + "willdabeast";
         }
 
+        public static string GetTitlePath()
+        {
+            return Directory.GetFiles(PathToPictures() + backslash + "title").FirstOrDefault();
+        }
+
         private static string PathToAssets()
         {
             var path = Directory.GetCurrentDirectory().Split(backslash[0]);

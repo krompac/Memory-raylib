@@ -20,6 +20,7 @@ namespace Memory
         private GameWindow gameWindow;
         private Gameplay gameplay;
         private OptionsManager optionsManager;
+        private Texture2D titlePicture;
 
         public GameManager(int windowWidth, int windowHeight)
         {
@@ -31,6 +32,8 @@ namespace Memory
             gameplay = null;
             optionsManager = new OptionsManager();
             InitializeGame();
+
+            titlePicture = LoadTexture(Program.GetTitlePath());
         }
 
         public void GameLoop()
@@ -43,6 +46,7 @@ namespace Memory
                 switch (gameWindow)
                 {
                     case GameWindow.Menu:
+                        DrawTexture(titlePicture, (windowWidth - titlePicture.width) / 2, 20, Color.BLUE);
                         DrawWindowWithButtons(menuItems);
                         SoundManager.Instance.MenuTheme();
                         break;

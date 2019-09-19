@@ -117,6 +117,7 @@
   <ItemGroup>
     <Content Include="Assets\Pictures\icon\icon.png" />
     <Content Include="Assets\Pictures\checkmark\checkmark.png" />
+    <Content Include="Assets\Pictures\title\first.png" />
     <Content Include="Assets\Pictures\willdabeast\abstract-043.png" />
     <Content Include="Assets\Pictures\willdabeast\abstract-044.png" />
     <Content Include="Assets\Pictures\willdabeast\abstract-045.png" />
