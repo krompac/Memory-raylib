@@ -4,7 +4,7 @@ using static Memory.MuteOption;
 
 namespace Memory
 {
-    class SoundOption
+    class SoundOption : IDrawable
     {
         private Text label;
         private TrackBar trackBar;

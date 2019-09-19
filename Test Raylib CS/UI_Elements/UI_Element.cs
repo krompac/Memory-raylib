@@ -3,7 +3,7 @@ using static Raylib.Raylib;
 
 namespace Memory
 {
-    class UI_Element
+    class UI_Element : IDrawable
     {
         protected Rectangle rect;
         protected Color color;

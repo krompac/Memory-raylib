@@ -103,6 +103,7 @@
     <Compile Include="Raylib-CS\Raygui.cs" />
     <Compile Include="Raylib-CS\Raylib.cs" />
     <Compile Include="Raylib-CS\Raymath.cs" />
+    <Compile Include="UI_Elements\Intefaces\IDrawable.cs" />
     <Compile Include="UI_Elements\Text.cs" />
     <Compile Include="UI_Elements\ToMenuButton.cs" />
     <Compile Include="UI_Elements\TrackBar.cs" />
@@ -201,5 +202,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
