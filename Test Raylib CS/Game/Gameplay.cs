@@ -10,13 +10,8 @@ namespace Memory
     class Gameplay
     {
         private bool gameWonSound;
-        private int resetTimer;
-        private readonly int maxResetTime;
-        private int turnTimer;
-        private int currentTurnTime;
-        private int currentTurnTimeFrame;
-        private int lastTimeFrame;
         private int currentPlayerIndex;
+        private Timer timer;
         private List<Card> memCards;
         private Card firstOpenedCard;
         private Card lastOpenedCard;
@@ -26,43 +21,24 @@ namespace Memory
 
         public Gameplay(Difficulty difficulty)
         {
+            timer = new Timer(ResetForNextTurn, difficulty);
+
             gameWonPanel = new UI_Element(325, 110, 480, 220);
             gameWonButton = new Button(280, 220, 100, 50, "Okay", GameWindow.Menu);
-
-            maxResetTime = 3 - (int)difficulty + 1;
-            InitGameByDifficulty(difficulty);
         }
 
         public void InitializeMainGame()
         {
+            timer.GameState = GameState.NotOpened;
+            timer.OuterRectColor = Color.BLUE;
+
             gameWonSound = true;
             firstOpenedCard = null;
             lastOpenedCard = null;
 
-            resetTimer = 0;
-            lastTimeFrame = 0;
-
             InitializeCards();
 
             currentPlayerIndex = 0;
-        }
-
-        private void InitGameByDifficulty(Difficulty difficulty)
-        {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    turnTimer = -1;
-                    break;
-                case Difficulty.Medium:
-                    turnTimer = 3;
-                    break;
-                case Difficulty.Hard:
-                    turnTimer = 2;
-                    break;
-            }
-
-            currentTurnTime = 0;
         }
 
         private void InitializeCards()
@@ -90,7 +66,7 @@ namespace Memory
             int startinXPos = 110;
 
             int x = startinXPos;
-            int y = 20;
+            int y = 60;
 
             Dictionary<string, int> images = new Dictionary<string, int>();
 
@@ -138,7 +114,6 @@ namespace Memory
             Players.ForEach(player => player.TextXpos = width - 140);
         }
 
-
         public bool CheckIfWon()
         {
             return memCards.Count(card => card.IsFound) == memCards.Count;
@@ -160,16 +135,7 @@ namespace Memory
             if (gameWonButton.CheckIfClicked())
             {
                 gameWindow = gameWonButton.Window;
-                //InitializeMainGame();
             }
-        }
-
-        private void ResetCounters()
-        {
-            resetTimer = 0;
-            lastTimeFrame = 0;
-            currentTurnTime = 0;
-            currentTurnTimeFrame = 0;
         }
 
         private void ResetCards()
@@ -185,6 +151,7 @@ namespace Memory
 
         public void DrawGameplay(ref GameWindow gameWindow)
         {
+            timer.DrawMe();
             memCards.ForEach(card => card.DrawMe());
 
             if (Players.Count > 1)
@@ -194,6 +161,8 @@ namespace Memory
 
             CheckForOpenCards();
             HandleOpenCards();
+
+            timer.UpdateTimer((int)DateTime.Now.TimeOfDay.TotalMilliseconds);
         }
 
         private void CheckForOpenCards()
@@ -218,7 +187,6 @@ namespace Memory
                         lastOpenedCard = null;
                         memCards.Where(card => card != firstOpenedCard).ToList().ForEach(card => card.ResetMe());
                         Card.NumberOfOpenCards = 1;
-                        ResetCounters();
                     }
 
                     if (lastOpenedCard != null)
@@ -231,22 +199,9 @@ namespace Memory
 
         private void HandleOpenCards()
         {
-            if (turnTimer > 0 && Card.NumberOfOpenCards > 0)
+            if (Card.NumberOfOpenCards > 0 && timer.GameState == GameState.NotOpened)
             {
-                if (currentTurnTimeFrame == 0)
-                {
-                    currentTurnTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
-                }
-                else if ((int)DateTime.Now.TimeOfDay.TotalSeconds - currentTurnTimeFrame >= 1)
-                {
-                    currentTurnTime++;
-                    currentTurnTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
-
-                    if (currentTurnTime == turnTimer)
-                    {
-                        ResetForNextTurn();
-                    }
-                }
+                timer.GameState = GameState.Opened;
             }
 
             if (Card.NumberOfOpenCards == 2)
@@ -256,32 +211,26 @@ namespace Memory
                     SoundManager.Instance.MatchedCard();
                     Players[currentPlayerIndex].Score++;
                     memCards.Where(card => card == firstOpenedCard || card == lastOpenedCard).ToList().ForEach(card => card.IsFound = true);
-                    ResetCounters();
                     ResetCards();
                     Card.NumberOfOpenCards = 0;
+                    timer.GameState = GameState.NotOpened;
+                    timer.UpdateProgresBar();
                 }
                 else
                 {
-                    if (resetTimer == maxResetTime)
+                    if (timer.GameState == GameState.Opened)
                     {
-                        ResetForNextTurn();
-                    }
-                    else if (lastTimeFrame > 0 && (int)DateTime.Now.TimeOfDay.TotalSeconds - lastTimeFrame >= 1)
-                    {
-                        resetTimer++;
-                        lastTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
-                    }
-                    else
-                    {
-                        lastTimeFrame = (int)DateTime.Now.TimeOfDay.TotalSeconds;
+                        timer.GameState = GameState.Reset;
+                        timer.UpdateProgresBar();
                     }
                 }
             }
             else if (Players.Count == 1 && lastOpenedCard != null && Card.NumberOfOpenCards > 2)
             {
+                timer.GameState = GameState.Opened;
+                timer.UpdateProgresBar();
                 memCards.Where(card => card != lastOpenedCard).ToList().ForEach(card => card.ResetMe());
                 Card.NumberOfOpenCards = 1;
-                ResetCounters();
                 firstOpenedCard = lastOpenedCard;
                 lastOpenedCard = null;
             }
@@ -291,13 +240,14 @@ namespace Memory
         {
             memCards.ForEach(card => card.ResetMe());
             Card.NumberOfOpenCards = 0;
-            ResetCounters();
+            timer.GameState = GameState.NotOpened;
             ResetCards();
 
             if (Players.Count > 0)
             {
                 currentPlayerIndex = currentPlayerIndex + 1 < Players.Count ? currentPlayerIndex + 1 : 0;
                 memCards.ForEach(card => card.Color = Players[currentPlayerIndex].MyColor);
+                timer.OuterRectColor = Players[currentPlayerIndex].MyColor;
             }
         }
     }

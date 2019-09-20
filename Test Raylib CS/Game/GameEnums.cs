@@ -16,4 +16,11 @@
         Medium,
         Hard
     }
+
+    enum GameState
+    {
+        NotOpened,
+        Opened,
+        Reset
+    }
 }

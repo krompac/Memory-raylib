@@ -105,6 +105,7 @@
     <Compile Include="Raylib-CS\Raymath.cs" />
     <Compile Include="UI_Elements\Intefaces\IDrawable.cs" />
     <Compile Include="UI_Elements\Text.cs" />
+    <Compile Include="UI_Elements\Timer.cs" />
     <Compile Include="UI_Elements\ToMenuButton.cs" />
     <Compile Include="UI_Elements\TrackBar.cs" />
     <Compile Include="UI_Elements\Tracker.cs" />

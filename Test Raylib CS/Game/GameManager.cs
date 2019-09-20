@@ -22,8 +22,7 @@ namespace Memory
         private OptionsManager optionsManager;
         private Texture2D titlePicture;
 
-        private Rectangle rectangle;
-        private Rectangle rectangle2;
+       
 
         public GameManager(int windowWidth, int windowHeight)
         {
@@ -38,8 +37,6 @@ namespace Memory
 
             titlePicture = LoadTexture(Program.GetTitlePath());
 
-            rectangle = new Rectangle(10, 10, 100, 50);
-            rectangle2 = new Rectangle(15, 15, 0, 40);
         }
 
         public void GameLoop()
@@ -52,8 +49,6 @@ namespace Memory
                 switch (gameWindow)
                 {
                     case GameWindow.Menu:
-                        DrawRectangleRec(rectangle, Color.BLUE);
-                        DrawRectangleRec(rectangle2, Color.WHITE);
                         
                         DrawTexture(titlePicture, (windowWidth - titlePicture.width) / 2, 20, Color.BLUE);
                         DrawWindowWithButtons(menuItems);
