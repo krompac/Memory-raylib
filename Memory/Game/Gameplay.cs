@@ -49,10 +49,12 @@ namespace Memory
             switch (Players.Count)
             {
                 case 4:
+                    timer.UpdatePosition(65);
                     rowWidth++;
                     pictureCount += 4;
                     goto case 3;
                 case 3:
+                    timer.UpdatePosition(65);
                     pictureCount += 7;
                     rowWidth++;
                     goto case 2;

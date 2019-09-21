@@ -6,10 +6,18 @@ namespace Memory
 {
     class Text
     {
-        private readonly int xPos;
+        private int xPos;
         private readonly int yPos;
         private readonly int fontSize;
         private readonly string text;
+
+        public int UpdateXpos
+        {
+            set
+            {
+                xPos += value;
+            }
+        }
 
         public Text(int x, int y, int fontSize, string text)
         {

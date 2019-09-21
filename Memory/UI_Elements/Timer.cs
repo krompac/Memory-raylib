@@ -12,8 +12,8 @@ namespace Memory
         public GameState GameState { get; set; }
 
         private Rectangle progres;
-        readonly float progresTempXPos;
-        readonly float widthToGetTo;
+        private float progresTempXPos;
+        private readonly float widthToGetTo;
 
         private Rectangle outerRect;
         public Color OuterRectColor { private get; set; }
@@ -75,6 +75,22 @@ namespace Memory
              * 33 = 3.6 sec 
              * 55 = 5.4 sec 
             */
+        }
+
+        /// <summary>
+        /// Add value to the x position of timer
+        /// </summary>
+        /// <param name="value"></param>
+        public void UpdatePosition(int value)
+        {
+            outerRect.x += value;
+            progresTempXPos = outerRect.x + 5;
+            progres.x = progresTempXPos;
+
+            foreach (var item in timerText.Values)
+            {
+                item.UpdateXpos = value;
+            }
         }
 
         public void DrawMe()
