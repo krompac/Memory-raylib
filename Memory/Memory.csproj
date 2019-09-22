@@ -37,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -103,6 +104,7 @@
     <Compile Include="Raylib-CS\Raygui.cs" />
     <Compile Include="Raylib-CS\Raylib.cs" />
     <Compile Include="Raylib-CS\Raymath.cs" />
+    <Compile Include="UI_Elements\GameWonPanel.cs" />
     <Compile Include="UI_Elements\Intefaces\IDrawable.cs" />
     <Compile Include="UI_Elements\Text.cs" />
     <Compile Include="UI_Elements\Timer.cs" />

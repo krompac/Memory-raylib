@@ -5,19 +5,31 @@ namespace Memory
 {
     class Button : UI_Element
     {
-        private string text;
+        private Text text;
         public GameWindow Window { get; private set; }
 
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)
         {
             this.Window = window;
-            this.text = text;
+
+            var fontSize = (int)rect.height / 2;
+            var textSize = MeasureText(text, fontSize);
+
+            while (w - textSize < 10)
+            {
+                fontSize--;
+                textSize = MeasureText(text, fontSize);
+            }
+
+            var textIndention = (int)(w - textSize) / 2;
+
+            this.text = new Text(x + textIndention, y + (h / 3), fontSize, text, Color.BLACK);
         }
 
         public override void DrawMe()
         {
             base.DrawMe();
-            DrawText(text, (int)rect.x + text.Length, (int)rect.y + ((int)rect.height / 3), (int)rect.height / 2, Color.BLACK);
+            text.DrawMe();
         }
 
         public override bool CheckIfClicked()

@@ -8,9 +8,22 @@ namespace Memory
         protected Rectangle rect;
         protected Color color;
 
+        public Color Color
+        {
+            set
+            {
+                this.color = value;
+            }
+        }
+
+        public UI_Element()
+        {
+            rect = new Rectangle();
+        }
+
         public UI_Element(int x, int y, int w, int h)
         {
-            rect = new Rectangle(x - (w / 2), y, w, h);
+            rect = new Rectangle(x, y, w, h);
             color = Color.BLUE;
         }
 

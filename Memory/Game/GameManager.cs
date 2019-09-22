@@ -22,8 +22,6 @@ namespace Memory
         private OptionsManager optionsManager;
         private Texture2D titlePicture;
 
-       
-
         public GameManager(int windowWidth, int windowHeight)
         {
             this.windowWidth = windowWidth;
@@ -36,7 +34,6 @@ namespace Memory
             InitializeGame();
 
             titlePicture = LoadTexture(Program.GetTitlePath());
-
         }
 
         public void GameLoop()
@@ -89,7 +86,7 @@ namespace Memory
 
         private void InitializeGame()
         {
-            int xPos = 320;
+            int xPos = 245;
             int yPos = 150;
             int yDiff = 65;
 
@@ -108,7 +105,7 @@ namespace Memory
             var mediumButton = new Button(xPos, yPos + yDiff, 150, 50, "Medium", GameWindow.Game);
             var hardButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Hard", GameWindow.Game);
 
-            toMenu = new ToMenuButton(590, 460, 100, 20, "Back", GameWindow.Menu);
+            toMenu = new ToMenuButton(540, 460, 100, 20, "Back", GameWindow.Menu);
 
             menuItems = new List<Button> { startButton, optionsButton, quitButton };
             playersButtons = new List<Button> { onePlayerButton, twoPlayersButton, threePlayersButton, fourPlayersButton };

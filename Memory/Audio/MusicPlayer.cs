@@ -9,6 +9,7 @@ namespace Memory
         public MusicPlayer(string pathToMusic) : base(pathToMusic)
         {
             wasPlaying = false;
+            player.Volume = 1.0f;
         }
 
         public PlaybackState PlaybackState

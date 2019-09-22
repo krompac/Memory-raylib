@@ -4,9 +4,10 @@ using static Raylib.Raylib;
 
 namespace Memory
 {
-    class Text
+    class Text : IDrawable
     {
         private int xPos;
+        private readonly Color color;
         private readonly int yPos;
         private readonly int fontSize;
         private readonly string text;
@@ -25,11 +26,17 @@ namespace Memory
             yPos = y;
             this.fontSize = fontSize;
             this.text = text;
+            this.color = Color.RAYWHITE;
         }
 
+        public Text(int x, int y, int fontSize, string text, Color color) : this(x, y, fontSize, text)
+        {
+            this.color = color;
+        }
+        
         public void DrawMe()
         {
-            DrawText(text, xPos, yPos, fontSize, Color.RAYWHITE);
+            DrawText(text, xPos, yPos, fontSize, color);
         }
     }
 }

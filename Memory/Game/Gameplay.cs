@@ -9,22 +9,19 @@ namespace Memory
 {
     class Gameplay
     {
-        private bool gameWonSound;
+        private GameWonPanel gameWonPanel;
         private int currentPlayerIndex;
         private Timer timer;
         private List<Card> memCards;
         private Card firstOpenedCard;
         private Card lastOpenedCard;
-        private UI_Element gameWonPanel;
-        private Button gameWonButton;
         public List<Player> Players { private get; set; }
 
         public Gameplay(Difficulty difficulty)
         {
             timer = new Timer(ResetForNextTurn, difficulty);
 
-            gameWonPanel = new UI_Element(325, 110, 480, 220);
-            gameWonButton = new Button(280, 220, 100, 50, "Okay", GameWindow.Menu);
+            gameWonPanel = new GameWonPanel(SoundManager.Instance.GameWon);
         }
 
         public void InitializeMainGame()
@@ -32,7 +29,6 @@ namespace Memory
             timer.GameState = GameState.NotOpened;
             timer.OuterRectColor = Color.BLUE;
 
-            gameWonSound = true;
             firstOpenedCard = null;
             lastOpenedCard = null;
 
@@ -43,7 +39,7 @@ namespace Memory
 
         private void InitializeCards()
         {
-            int pictureCount = 15;
+            int pictureCount = 1;
             int rowWidth = 6;
 
             switch (Players.Count)
@@ -118,25 +114,25 @@ namespace Memory
 
         public bool CheckIfWon()
         {
-            return memCards.Count(card => card.IsFound) == memCards.Count;
+            var isWon = memCards.Count(card => card.IsFound) == memCards.Count;
+
+            if (isWon)
+            {
+                var winner = Players.OrderBy(player => player.Score).FirstOrDefault();
+
+                gameWonPanel.Init(winner);
+            }
+
+            return isWon;
         }
 
         public void DrawGameWon(ref GameWindow gameWindow)
         {
-            if (gameWonSound)
-            {
-                SoundManager.Instance.GameWon();
-                gameWonSound = false;
-            }
+            gameWonPanel.DrawMeWithLines(3, Color.WHITE);
 
-            gameWonPanel.DrawMeWithLines(5, Color.WHITE);
-            var winner = Players.OrderBy(player => player.Score).FirstOrDefault();
-            DrawText(winner.Name.ToUpper() + " WON", 95, 110, 100, Color.BLACK);
-            gameWonButton.DrawMeWithLines(3, Color.BLACK);
-
-            if (gameWonButton.CheckIfClicked())
+            if (gameWonPanel.CheckIfClicked())
             {
-                gameWindow = gameWonButton.Window;
+                gameWindow = gameWonPanel.Window;
             }
         }
 
