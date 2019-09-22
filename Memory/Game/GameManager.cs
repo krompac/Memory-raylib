@@ -144,7 +144,11 @@ namespace Memory
 
                 SetWindowSize(width, height);
                 toMenu.UpdatePosition(width, height);
-                gameplay.UpdatePlayersTextPosition(width);
+
+                if (gameplay != null)
+                {
+                    gameplay.UpdatePlayersTextPosition(width);
+                }
 
                 windowSizeChanged = false;
             }

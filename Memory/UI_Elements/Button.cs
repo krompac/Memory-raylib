@@ -5,7 +5,7 @@ namespace Memory
 {
     class Button : UI_Element
     {
-        private Text text;
+        protected Text text;
         public GameWindow Window { get; private set; }
 
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)

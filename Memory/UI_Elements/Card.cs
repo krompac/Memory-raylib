@@ -15,14 +15,18 @@ namespace Memory
 
         public Card(int x, int y, int w, int h, int cardId, string fileName = "") : base(x, y, w, h)
         {
+            position = new Vector2(rect.x, y);
+
             if (fileName != "")
             {
                 image = LoadTexture(fileName);
+
+                //position.x += (w - image.width) / 2;
+                //position.y += (h - image.height) / 2;
             }
 
             this.CardID = cardId;
 
-            position = new Vector2(rect.x, y);
             drawImage = false;
             IsFound = false;
         }

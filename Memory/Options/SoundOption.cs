@@ -19,9 +19,9 @@ namespace Memory
             int fontSize = 25;
 
             trackBar = new TrackBar(xPos, yPos, width, height, Color.ORANGE, Color.MAGENTA);
-            label = new Text(xPos - 10 - MeasureText(labelText, fontSize), yPos - fontSize / 2, fontSize, labelText);
+            label = new Text(xPos - 10 - MeasureText(labelText, fontSize), yPos - fontSize / 2, fontSize, labelText, Color.RAYWHITE);
 
-            var muteText = new Text(xPos + width + 25, yPos - 45, fontSize, "Mute?");
+            var muteText = new Text(xPos + width + 25, yPos - 45, fontSize, "Mute?", Color.RAYWHITE);
             muteOption = new MuteOption(mute, unMute, muteText, xPos + width + 50, yPos - 20, 50, 50);
         }
 

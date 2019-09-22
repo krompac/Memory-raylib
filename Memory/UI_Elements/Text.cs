@@ -7,8 +7,8 @@ namespace Memory
     class Text : IDrawable
     {
         private int xPos;
+        private int yPos;
         private readonly Color color;
-        private readonly int yPos;
         private readonly int fontSize;
         private readonly string text;
 
@@ -20,17 +20,20 @@ namespace Memory
             }
         }
 
-        public Text(int x, int y, int fontSize, string text)
+        public int YPos
+        {
+            set
+            {
+                yPos = value;
+            }
+        }
+
+        public Text(int x, int y, int fontSize, string text, Color color)
         {
             xPos = x;
             yPos = y;
             this.fontSize = fontSize;
             this.text = text;
-            this.color = Color.RAYWHITE;
-        }
-
-        public Text(int x, int y, int fontSize, string text, Color color) : this(x, y, fontSize, text)
-        {
             this.color = color;
         }
         

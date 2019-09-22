@@ -39,7 +39,7 @@ namespace Memory
 
         private void InitializeCards()
         {
-            int pictureCount = 1;
+            int pictureCount = 15;
             int rowWidth = 6;
 
             switch (Players.Count)
@@ -61,7 +61,7 @@ namespace Memory
 
             memCards = new List<Card>();
 
-            int startinXPos = 110;
+            int startinXPos = 80;
 
             int x = startinXPos;
             int y = 60;
@@ -133,6 +133,7 @@ namespace Memory
             if (gameWonPanel.CheckIfClicked())
             {
                 gameWindow = gameWonPanel.Window;
+                SoundManager.Instance.ResetMusic();
             }
         }
 
@@ -183,7 +184,6 @@ namespace Memory
                     if (lastOpenedCard == firstOpenedCard)
                     {
                         lastOpenedCard = null;
-                        memCards.Where(card => card != firstOpenedCard).ToList().ForEach(card => card.ResetMe());
                         Card.NumberOfOpenCards = 1;
                     }
 
@@ -208,7 +208,8 @@ namespace Memory
                 {
                     SoundManager.Instance.MatchedCard();
                     Players[currentPlayerIndex].Score++;
-                    memCards.Where(card => card == firstOpenedCard || card == lastOpenedCard).ToList().ForEach(card => card.IsFound = true);
+                    firstOpenedCard.IsFound = true;
+                    lastOpenedCard.IsFound = true;
                     ResetCards();
                     Card.NumberOfOpenCards = 0;
                     timer.GameState = GameState.NotOpened;

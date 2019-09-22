@@ -40,8 +40,8 @@ namespace Memory
             outerRect = new Rectangle(posX, posY, width, heigth);
             progres = new Rectangle(progresTempXPos, posY + 5, 0, heigth - 10);
 
-            var reset = new Text(221, 12, 25, "Reset time");
-            var turn = new Text(230, 12, 25, "Turn time");
+            var reset = new Text(221, 12, 25, "Reset time", Color.WHITE);
+            var turn = new Text(230, 12, 25, "Turn time", Color.WHITE);
 
             timerText = new Dictionary<GameState, Text>
             {
@@ -95,10 +95,9 @@ namespace Memory
 
         public void DrawMe()
         {
-            DrawRectangleRec(outerRect, OuterRectColor);
-
             if (GameState != GameState.NotOpened)
             {
+                DrawRectangleRec(outerRect, OuterRectColor);
                 timerText[GameState].DrawMe();
                 DrawRectangleRec(progres, Color.WHITE);
             }
@@ -125,6 +124,7 @@ namespace Memory
                         }
                         else
                         {
+                            progres.width = 0;
                             nextTurn.Invoke();
                         }
                     }
