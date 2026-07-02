@@ -2,16 +2,16 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using Raylib;
-using static Raylib.Raylib;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
     class Gameplay
     {
-        private GameWonPanel gameWonPanel;
+        private readonly GameWonPanel gameWonPanel;
         private int currentPlayerIndex;
-        private Timer timer;
+        private readonly Timer timer;
         private List<Card> memCards;
         private Card firstOpenedCard;
         private Card lastOpenedCard;
@@ -27,7 +27,7 @@ namespace Memory
         public void InitializeMainGame()
         {
             timer.GameState = GameState.NotOpened;
-            timer.OuterRectColor = Color.BLUE;
+            timer.OuterRectColor = Color.Blue;
 
             firstOpenedCard = null;
             lastOpenedCard = null;
@@ -128,7 +128,7 @@ namespace Memory
 
         public void DrawGameWon(ref GameWindow gameWindow)
         {
-            gameWonPanel.DrawMeWithLines(3, Color.WHITE);
+            gameWonPanel.DrawMeWithLines(3, Color.White);
 
             if (gameWonPanel.CheckIfClicked())
             {

@@ -1,5 +1,5 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 using System.Collections.Generic;
 
 namespace Memory
@@ -7,7 +7,7 @@ namespace Memory
     class Timer : IDrawable
     {
         public delegate void Action();
-        private Action nextTurn;
+        private readonly Action nextTurn;
 
         public GameState GameState { get; set; }
 
@@ -40,8 +40,8 @@ namespace Memory
             outerRect = new Rectangle(posX, posY, width, heigth);
             progres = new Rectangle(progresTempXPos, posY + 5, 0, heigth - 10);
 
-            var reset = new Text(221, 12, 25, "Reset time", Color.WHITE);
-            var turn = new Text(230, 12, 25, "Turn time", Color.WHITE);
+            var reset = new Text(221, 12, 25, "Reset time", Color.White);
+            var turn = new Text(230, 12, 25, "Turn time", Color.White);
 
             timerText = new Dictionary<GameState, Text>
             {
@@ -83,9 +83,9 @@ namespace Memory
         /// <param name="value"></param>
         public void UpdatePosition(int value)
         {
-            outerRect.x += value;
-            progresTempXPos = outerRect.x + 5;
-            progres.x = progresTempXPos;
+            outerRect.X += value;
+            progresTempXPos = outerRect.X + 5;
+            progres.X = progresTempXPos;
 
             foreach (var item in timerText.Values)
             {
@@ -99,7 +99,7 @@ namespace Memory
             {
                 DrawRectangleRec(outerRect, OuterRectColor);
                 timerText[GameState].DrawMe();
-                DrawRectangleRec(progres, Color.WHITE);
+                DrawRectangleRec(progres, Color.White);
             }
         }
 
@@ -118,13 +118,13 @@ namespace Memory
                     {
                         prevTime = time;
 
-                        if (progres.width < widthToGetTo)
+                        if (progres.Width < widthToGetTo)
                         {
-                            progres.width++;
+                            progres.Width++;
                         }
                         else
                         {
-                            progres.width = 0;
+                            progres.Width = 0;
                             nextTurn.Invoke();
                         }
                     }
@@ -135,14 +135,14 @@ namespace Memory
                     {
                         prevTime = time;
 
-                        if (progres.x < progresTempXPos + widthToGetTo)
+                        if (progres.X < progresTempXPos + widthToGetTo)
                         {
-                            progres.x++;
-                            progres.width--;
+                            progres.X++;
+                            progres.Width--;
                         }
                         else
                         {
-                            progres.x = progresTempXPos;
+                            progres.X = progresTempXPos;
                             nextTurn.Invoke();
                         }
                     }
@@ -152,9 +152,9 @@ namespace Memory
 
         public void UpdateProgresBar()
         {
-            progres.width = (GameState == GameState.Reset) ? 90 : 0;
-            
-            progres.x = progresTempXPos;
+            progres.Width = (GameState == GameState.Reset) ? 90 : 0;
+
+            progres.X = progresTempXPos;
             prevTime = 0;
         }
     }

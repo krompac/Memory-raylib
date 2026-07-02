@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Raylib;
-using static Raylib.Raylib;
+using System.Numerics;
+
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -24,17 +21,17 @@ namespace Memory
             this.mute = mute;
             this.unMute = unMute;
             this.text = text;
-            imagePosition = new Vector2(rect.x, y);
+            imagePosition = new Vector2(rect.X, y);
 
             Initialize();
         }
 
         private void Initialize()
         {
-            color = Color.BLACK;
+            color = Color.Black;
             Console.WriteLine(Program.GetCheckMarkPath());
             checkMarkImage = LoadTexture(Program.GetCheckMarkPath());
-            
+
             isChecked = false;
         }
 
@@ -60,11 +57,11 @@ namespace Memory
         public override void DrawMe()
         {
             text.DrawMe();
-            DrawRectangleLinesEx(rect, 1, Color.WHITE);
+            DrawRectangleLinesEx(rect, 1, Color.White);
 
             if (isChecked)
             {
-                DrawTextureEx(checkMarkImage, imagePosition, 0, 0.4f, Color.WHITE);
+                DrawTextureEx(checkMarkImage, imagePosition, 0, 0.4f, Color.White);
             }
         }
     }

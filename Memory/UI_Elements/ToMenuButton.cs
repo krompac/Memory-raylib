@@ -1,23 +1,18 @@
 ﻿namespace Memory
 {
-    class ToMenuButton : Button
+    class ToMenuButton(int x, int y, int w, int h, string text, GameWindow window) : Button(x, y, w, h, text, window)
     {
-        public ToMenuButton(int x, int y, int w, int h, string text, GameWindow window)
-            : base(x, y, w, h, text, window)
-        {
-        }
-
         public void UpdatePosition(int windowWidth, int windowHeight)
         {
-            var xDif = rect.x;
+            var xDif = rect.X;
 
-            rect.x = windowWidth - 100;
-            rect.y = windowHeight - 20;
+            rect.X = windowWidth - 100;
+            rect.Y = windowHeight - 20;
 
-            xDif -= rect.x;
+            xDif -= rect.X;
 
             text.UpdateXpos = (int)xDif;
-            text.YPos = (int)(rect.y + (rect.height / 3));
+            text.YPos = (int)(rect.Y + (rect.Height / 3));
         }
     }
 }

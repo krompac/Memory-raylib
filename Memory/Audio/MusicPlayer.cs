@@ -1,61 +1,104 @@
-﻿using NAudio.Wave;
+﻿using Raylib_cs;
 
 namespace Memory
 {
-    class MusicPlayer : SoundPlayer
+    public enum PlaybackState
     {
-        private bool wasPlaying;
-        
-        public MusicPlayer(string pathToMusic) : base(pathToMusic)
+        Stopped,
+        Playing,
+        Paused
+    }
+
+    class MusicPlayer
+    {
+        private Music music;
+        private bool muteMe;
+        private float volume;
+        private PlaybackState state;
+
+        public MusicPlayer(string pathToMusic)
         {
-            wasPlaying = false;
-            player.Volume = 1.0f;
+            music = Raylib.LoadMusicStream(pathToMusic);
+            muteMe = false;
+            volume = 1.0f;
+            state = PlaybackState.Stopped;
         }
 
-        public PlaybackState PlaybackState
+        public PlaybackState PlaybackState => state;
+
+        public void UpdateVolume(float value)
         {
-            get
-            {
-                return player.PlaybackState;
-            }
+            volume = value;
+            Raylib.SetMusicVolume(music, muteMe ? 0f : volume);
         }
 
-        public override void Init()
+        public void Init()
         {
-            base.Init();
-            player.PlaybackStopped += PlaybackStopped;
+            // Music is already loaded in the constructor with raylib.
         }
 
-        public override void Mute()
+        public void Mute()
         {
-            base.Mute();
-
-            if (player.PlaybackState == PlaybackState.Playing)
-            {
-                player.Pause();
-                wasPlaying = true;
-            }
+            muteMe = true;
+            Raylib.SetMusicVolume(music, 0f);
         }
 
-        public override void UnMute()
+        public void UnMute()
         {
-            base.UnMute();
+            muteMe = false;
+            Raylib.SetMusicVolume(music, volume);
 
-            if (wasPlaying)
+            if (state == PlaybackState.Paused)
             {
                 Play();
-                wasPlaying = false;
             }
         }
 
-        private void PlaybackStopped(object sender, StoppedEventArgs e)
+        public void Play()
         {
-            ResetPosition();
+            if (muteMe)
+            {
+                return;
+            }
+
+            if (state == PlaybackState.Stopped)
+            {
+                Raylib.PlayMusicStream(music);
+            }
+            else if (state == PlaybackState.Paused)
+            {
+                Raylib.ResumeMusicStream(music);
+            }
+
+            state = PlaybackState.Playing;
         }
 
         public void Pause()
         {
-            player.Pause();
+            Raylib.PauseMusicStream(music);
+            state = PlaybackState.Paused;
+        }
+
+        public void ResetPosition()
+        {
+            Raylib.SeekMusicStream(music, 0f);
+            state = PlaybackState.Stopped;
+        }
+
+        // IMPORTANT: unlike NAudio, raylib streams music off the game loop rather
+        // than a background thread — this must be called once per frame for
+        // whichever music track is currently playing, or you'll get silence/stutter.
+        public void Update()
+        {
+            if (state == PlaybackState.Playing)
+            {
+                Raylib.UpdateMusicStream(music);
+            }
+        }
+
+        public void Unload()
+        {
+            Raylib.UnloadMusicStream(music);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -11,11 +11,11 @@ namespace Memory
         {
             set
             {
-                rect.x = value;
+                rect.X = value;
             }
             get
             {
-                return (int)rect.x;
+                return (int)rect.X;
             }
         }
 
@@ -29,7 +29,7 @@ namespace Memory
             {
                 isClicked = base.CheckIfClicked();
             }
-            
+
             return isClicked;
         }
 
@@ -37,7 +37,7 @@ namespace Memory
         {
             CheckIfClicked();
 
-            var mouseXpos = (int)GetMousePosition().x;
+            var mouseXpos = (int)GetMousePosition().X;
             if (isClicked && IsMouseButtonDown(0) && mouseXpos >= minX && mouseXpos <= maxX)
             {
                 XPos = mouseXpos;

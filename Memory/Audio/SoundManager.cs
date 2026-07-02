@@ -1,6 +1,4 @@
-﻿using NAudio.Wave;
-
-namespace Memory
+﻿namespace Memory
 {
     class SoundManager
     {
@@ -30,7 +28,7 @@ namespace Memory
         private SoundManager()
         {
             var pathToSounds = System.IO.Directory.GetFiles(Program.PathToSounds());
-            
+
             gameplayMusicPlayer = new MusicPlayer(pathToSounds[0]);
 
             buttonSoundPlayer = new SoundPlayer(pathToSounds[1]);
@@ -47,7 +45,7 @@ namespace Memory
 
             buttonSoundPlayer.UpdateVolume(value);
         }
-        
+
         public void UpdateMusic(float value)
         {
             value /= 100.0f;
@@ -64,6 +62,14 @@ namespace Memory
             gameWonSoundPlayer.Init();
             menuMusicPlayer.Init();
             gameplayMusicPlayer.Init();
+        }
+
+        // NEW: raylib streams music from the main thread instead of a background
+        // audio thread, so this needs to be called once per frame from GameLoop().
+        public void Update()
+        {
+            menuMusicPlayer.Update();
+            gameplayMusicPlayer.Update();
         }
 
         public void MuteSounds()
@@ -113,7 +119,7 @@ namespace Memory
 
         public void OpenCard()
         {
-            PlaySound(cardClickSoundPlayer);    
+            PlaySound(cardClickSoundPlayer);
         }
 
         public void MatchedCard()

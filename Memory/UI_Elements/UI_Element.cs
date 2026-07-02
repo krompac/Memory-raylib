@@ -1,5 +1,5 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -12,7 +12,7 @@ namespace Memory
         {
             set
             {
-                this.color = value;
+                color = value;
             }
         }
 
@@ -24,12 +24,12 @@ namespace Memory
         public UI_Element(int x, int y, int w, int h)
         {
             rect = new Rectangle(x, y, w, h);
-            color = Color.BLUE;
+            color = Color.Blue;
         }
 
         public UI_Element(int x, int y, int w, int h, Color color) : this(x, y, w, h)
         {
-            rect.x = x;
+            rect.X = x;
             this.color = color;
         }
 
@@ -45,7 +45,7 @@ namespace Memory
 
         public virtual void DrawMeWithLines(int lineThicknes, Color lineColor)
         {
-            this.DrawMe();
+            DrawMe();
             DrawRectangleLinesEx(rect, lineThicknes, lineColor);
         }
     }

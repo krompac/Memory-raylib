@@ -1,5 +1,6 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -15,17 +16,17 @@ namespace Memory
 
         public Card(int x, int y, int w, int h, int cardId, string fileName = "") : base(x, y, w, h)
         {
-            position = new Vector2(rect.x, y);
+            position = new Vector2(rect.X, y);
 
             if (fileName != "")
             {
                 image = LoadTexture(fileName);
 
-                //position.x += (w - image.width) / 2;
-                //position.y += (h - image.height) / 2;
+                //position.X += (w - image.Width) / 2;
+                //position.Y += (h - image.height) / 2;
             }
 
-            this.CardID = cardId;
+            CardID = cardId;
 
             drawImage = false;
             IsFound = false;
@@ -40,7 +41,7 @@ namespace Memory
 
             if (drawImage)
             {
-                DrawTextureEx(image, position, 0, 0.1f, Color.WHITE);
+                DrawTextureEx(image, position, 0, 0.1f, Color.White);
             }
         }
 

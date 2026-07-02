@@ -1,5 +1,5 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -21,8 +21,8 @@ namespace Memory
 
         public Player(string name, Color color, int index)
         {
-            this.Name = name;
-            this.MyColor = color;
+            Name = name;
+            MyColor = color;
             this.index = index;
             Score = 0;
             textXpos = 500;

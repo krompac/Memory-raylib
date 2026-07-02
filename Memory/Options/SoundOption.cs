@@ -1,14 +1,14 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 using static Memory.MuteOption;
 
 namespace Memory
 {
     class SoundOption : IDrawable
     {
-        private Text label;
-        private TrackBar trackBar;
-        private MuteOption muteOption;
+        private readonly Text label;
+        private readonly TrackBar trackBar;
+        private readonly MuteOption muteOption;
 
         public SoundOption(string labelText, int index, MuteAction mute, MuteAction unMute)
         {
@@ -18,10 +18,10 @@ namespace Memory
             int height = 7;
             int fontSize = 25;
 
-            trackBar = new TrackBar(xPos, yPos, width, height, Color.ORANGE, Color.MAGENTA);
-            label = new Text(xPos - 10 - MeasureText(labelText, fontSize), yPos - fontSize / 2, fontSize, labelText, Color.RAYWHITE);
+            trackBar = new TrackBar(xPos, yPos, width, height, Color.Orange, Color.Magenta);
+            label = new Text(xPos - 10 - MeasureText(labelText, fontSize), yPos - fontSize / 2, fontSize, labelText, Color.RayWhite);
 
-            var muteText = new Text(xPos + width + 25, yPos - 45, fontSize, "Mute?", Color.RAYWHITE);
+            var muteText = new Text(xPos + width + 25, yPos - 45, fontSize, "Mute?", Color.RayWhite);
             muteOption = new MuteOption(mute, unMute, muteText, xPos + width + 50, yPos - 20, 50, 50);
         }
 

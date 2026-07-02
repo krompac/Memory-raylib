@@ -1,12 +1,14 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
     class GameWonPanel : UI_Element
     {
         public delegate void PlaySound();
-        private PlaySound sound;
+
+        private readonly PlaySound sound;
+
         private bool soundPlayed;
 
         private Button gameWonButton;
@@ -30,24 +32,27 @@ namespace Memory
         {
             if (text == null)
             {
-                this.rect.width = 350;
-                this.rect.x = (GetScreenWidth() - rect.width) / 2;
-                this.rect.y = GetScreenHeight() / 6;
-                rect.height = GetScreenHeight() / 3;
+                rect.Width = 350;
+                rect.X = (GetScreenWidth() - rect.Width) / 2;
+                rect.Y = GetScreenHeight() / 6;
+                rect.Height = GetScreenHeight() / 3;
 
-                var buttonXpos = (int)(rect.x + ((rect.width - 100) / 2));
-                var buttonYpos = (int)(rect.y + rect.height - 70);
+                var buttonXpos = (int)(rect.X + ((rect.Width - 100) / 2));
+                var buttonYpos = (int)(rect.Y + rect.Height - 70);
 
-                gameWonButton = new Button(buttonXpos, buttonYpos, 100, 50, "Okay", GameWindow.Menu);
-                gameWonButton.Color = winner.MyColor;
-                this.color = winner.MyColor;
+                gameWonButton = new Button(buttonXpos, buttonYpos, 100, 50, "Okay", GameWindow.Menu)
+                {
+                    Color = winner.MyColor
+                };
+
+                color = winner.MyColor;
 
                 var fontSize = 30;
                 var caption = winner.Name.ToUpper() + " WINS";
-                var textSize = MeasureText(caption , fontSize);
-                var textXpos = (int)rect.x + (((int)rect.width - textSize) / 2);
+                var textSize = MeasureText(caption, fontSize);
+                var textXpos = (int)rect.X + (((int)rect.Width - textSize) / 2);
 
-                text = new Text(textXpos, (int)rect.y + 10, fontSize, caption, Color.BLACK);
+                text = new Text(textXpos, (int)rect.Y + 10, fontSize, caption, Color.Black);
             }
         }
 
@@ -61,7 +66,7 @@ namespace Memory
                 soundPlayed = true;
             }
 
-            gameWonButton.DrawMeWithLines(3, Color.BLACK);
+            gameWonButton.DrawMeWithLines(3, Color.Black);
             text.DrawMe();
         }
 

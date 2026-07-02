@@ -1,9 +1,5 @@
-﻿using System;
-using System.Threading;
-using System.Collections.Generic;
-using System.Linq;
-using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -19,7 +15,7 @@ namespace Memory
         private ToMenuButton toMenu;
         private GameWindow gameWindow;
         private Gameplay gameplay;
-        private OptionsManager optionsManager;
+        private readonly OptionsManager optionsManager;
         private Texture2D titlePicture;
 
         public GameManager(int windowWidth, int windowHeight)
@@ -40,14 +36,16 @@ namespace Memory
         {
             while (!WindowShouldClose())
             {
+                SoundManager.Instance.Update();
+
                 BeginDrawing();
-                ClearBackground(Color.BLACK);
+                ClearBackground(Color.Black);
 
                 switch (gameWindow)
                 {
                     case GameWindow.Menu:
-                        
-                        DrawTexture(titlePicture, (windowWidth - titlePicture.width) / 2, 20, Color.BLUE);
+
+                        DrawTexture(titlePicture, (windowWidth - titlePicture.Width) / 2, 20, Color.Blue);
                         DrawWindowWithButtons(menuItems);
                         SoundManager.Instance.MenuTheme();
                         break;
@@ -128,7 +126,7 @@ namespace Memory
                 var width = windowWidth;
                 var height = windowHeight;
 
-                switch(numberOfPlayers)
+                switch (numberOfPlayers)
                 {
                     case 3:
                         width += 60;
@@ -193,17 +191,17 @@ namespace Memory
             switch (buttonIndex)
             {
                 case 3:
-                    players.Add(new Player("Player4", Color.ORANGE, 3));
+                    players.Add(new Player("Player4", Color.Orange, 3));
                     goto case 2;
                 case 2:
-                    players.Add(new Player("Player3", Color.GREEN, 2));
+                    players.Add(new Player("Player3", Color.Green, 2));
                     goto case 1;
                 case 1:
                     windowSizeChanged = true;
-                    players.Add(new Player("Player2", Color.RED, 1));
+                    players.Add(new Player("Player2", Color.Red, 1));
                     goto case 0;
                 case 0:
-                    players.Add(new Player("Player1", Color.BLUE, 0));
+                    players.Add(new Player("Player1", Color.Blue, 0));
                     break;
                 default:
                     break;

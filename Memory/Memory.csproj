@@ -1,211 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A96D67F4-9CE1-4D31-958B-D4CB37A404A2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Memory</RootNamespace>
     <AssemblyName>Memory</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net8.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="NAudio, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.1.9.0\lib\net35\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Raylib-cs" Version="8.0.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Game\Player.cs" />
-    <Compile Include="Audio\SoundManager.cs" />
-    <Compile Include="Audio\MusicPlayer.cs" />
-    <Compile Include="Audio\SoundPlayer.cs" />
-    <Compile Include="Options\MuteOption.cs" />
-    <Compile Include="Options\OptionsManager.cs" />
-    <Compile Include="Options\SoundOption.cs" />
-    <Compile Include="UI_Elements\Button.cs" />
-    <Compile Include="UI_Elements\Card.cs" />
-    <Compile Include="Game\GameManager.cs" />
-    <Compile Include="Game\GameEnums.cs" />
-    <Compile Include="Game\Gameplay.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Raylib-CS\Easings.cs" />
-    <Compile Include="Raylib-CS\Extensions.cs" />
-    <Compile Include="Raylib-CS\Physac.cs" />
-    <Compile Include="Raylib-CS\Raygui.cs" />
-    <Compile Include="Raylib-CS\Raylib.cs" />
-    <Compile Include="Raylib-CS\Raymath.cs" />
-    <Compile Include="UI_Elements\GameWonPanel.cs" />
-    <Compile Include="UI_Elements\Intefaces\IDrawable.cs" />
-    <Compile Include="UI_Elements\Text.cs" />
-    <Compile Include="UI_Elements\Timer.cs" />
-    <Compile Include="UI_Elements\ToMenuButton.cs" />
-    <Compile Include="UI_Elements\TrackBar.cs" />
-    <Compile Include="UI_Elements\Tracker.cs" />
-    <Compile Include="UI_Elements\UI_Element.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Pictures\icon\icon.png" />
-    <Content Include="Assets\Pictures\checkmark\checkmark.png" />
-    <Content Include="Assets\Pictures\title\first.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-043.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-044.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-045.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-046.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-047.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-048.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-049.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-050.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-051.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-052.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-053.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-054.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-055.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-056.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-057.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-058.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-059.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-060.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-061.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-062.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-063.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-064.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-065.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-066.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-067.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-068.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-069.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-070.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-071.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-072.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-073.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-074.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-075.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-076.png" />
-    <Content Include="Assets\Pictures\willdabeast\abstract-077.png" />
-    <Content Include="Assets\Pictures\willdabeast\artillery-shell.png" />
-    <Content Include="Assets\Pictures\willdabeast\biplane.png" />
-    <Content Include="Assets\Pictures\willdabeast\black-book.png" />
-    <Content Include="Assets\Pictures\willdabeast\bunker-assault.png" />
-    <Content Include="Assets\Pictures\willdabeast\bunker.png" />
-    <Content Include="Assets\Pictures\willdabeast\card-discard.png" />
-    <Content Include="Assets\Pictures\willdabeast\card-draw.png" />
-    <Content Include="Assets\Pictures\willdabeast\card-pick.png" />
-    <Content Include="Assets\Pictures\willdabeast\card-random.png" />
-    <Content Include="Assets\Pictures\willdabeast\chain-lightning.png" />
-    <Content Include="Assets\Pictures\willdabeast\chain-mail.png" />
-    <Content Include="Assets\Pictures\willdabeast\damaged-house.png" />
-    <Content Include="Assets\Pictures\willdabeast\dragon-head.png" />
-    <Content Include="Assets\Pictures\willdabeast\field-gun.png" />
-    <Content Include="Assets\Pictures\willdabeast\forward-sun.png" />
-    <Content Include="Assets\Pictures\willdabeast\gold-bar.png" />
-    <Content Include="Assets\Pictures\willdabeast\lost-limb.png" />
-    <Content Include="Assets\Pictures\willdabeast\military-ambulance.png" />
-    <Content Include="Assets\Pictures\willdabeast\minerals.png" />
-    <Content Include="Assets\Pictures\willdabeast\nautilus-shell.png" />
-    <Content Include="Assets\Pictures\willdabeast\ninja-star.png" />
-    <Content Include="Assets\Pictures\willdabeast\orb-wand.png" />
-    <Content Include="Assets\Pictures\willdabeast\ore.png" />
-    <Content Include="Assets\Pictures\willdabeast\poppy.png" />
-    <Content Include="Assets\Pictures\willdabeast\round-shield.png" />
-    <Content Include="Assets\Pictures\willdabeast\trench-assault.png" />
-    <Content Include="Assets\Pictures\willdabeast\white-book.png" />
-    <Content Include="Assets\Sounds\bensound-memories.wav" />
-    <Content Include="Assets\Sounds\buttonsound.wav" />
-    <Content Include="Assets\Sounds\card_click.wav" />
-    <Content Include="Assets\Sounds\card_succes.wav" />
-    <Content Include="Assets\Sounds\game_won.wav" />
-    <Content Include="Assets\Sounds\soundtails_-_Dark_Sky_1.wav" />
-    <Content Include="raylib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <!-- Copy asset folders next to the built exe so relative paths keep working -->
+    <Content Include="Assets\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

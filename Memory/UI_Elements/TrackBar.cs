@@ -1,18 +1,12 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
-    class TrackBar : UI_Element
+    class TrackBar(int x, int y, int w, int h, Color barColor, Color trackerColor) : UI_Element(x, y, w, h, barColor)
     {
-        private Tracker tracker;
-        private float volume;
-        
-        public TrackBar(int x, int y, int w, int h, Color barColor, Color trackerColor) : base(x, y, w, h, barColor)
-        {
-            tracker = new Tracker(x + w, y - 2, w / 40, h + 4, trackerColor);
-            volume = 0;
-        }
+        private readonly Tracker tracker = new Tracker(x + w, y - 2, w / 40, h + 4, trackerColor);
+        private float volume = 0;
 
         public override void DrawMe()
         {
@@ -20,7 +14,7 @@ namespace Memory
             tracker.DrawMe();
 
             var vol = (int)(volume + 0.5);
-            DrawText(vol.ToString(), (int)rect.x, (int)rect.y - 26, 25, Color.GOLD);
+            DrawText(vol.ToString(), (int)rect.X, (int)rect.Y - 26, 25, Color.Gold);
         }
 
         public override bool CheckIfClicked()
@@ -29,7 +23,7 @@ namespace Memory
 
             if (clicked)
             {
-                tracker.XPos = (int)GetMousePosition().x;
+                tracker.XPos = (int)GetMousePosition().X;
             }
 
             return clicked;
@@ -37,8 +31,8 @@ namespace Memory
 
         public float DragTracker()
         {
-            tracker.DragMe((int)rect.x, (int)(rect.x + rect.width));
-            volume = (tracker.XPos - rect.x) / (rect.width / 100.0f);
+            tracker.DragMe((int)rect.X, (int)(rect.X + rect.Width));
+            volume = (tracker.XPos - rect.X) / (rect.Width / 100.0f);
 
             return volume;
         }

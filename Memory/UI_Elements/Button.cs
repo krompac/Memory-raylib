@@ -1,5 +1,5 @@
-﻿using Raylib;
-using static Raylib.Raylib;
+﻿using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
@@ -10,10 +10,10 @@ namespace Memory
 
         public Button(int x, int y, int w, int h, string text, GameWindow window) : base(x, y, w, h)
         {
-            this.Window = window;
+            Window = window;
 
-            var fontSize = (int)rect.height / 2;
-            var textSize = MeasureText(text, fontSize);
+            int fontSize = (int)rect.Height / 2;
+            int textSize = MeasureText(text, fontSize);
 
             while (w - textSize < 10)
             {
@@ -21,9 +21,9 @@ namespace Memory
                 textSize = MeasureText(text, fontSize);
             }
 
-            var textIndention = (int)(w - textSize) / 2;
+            int textIndention = (w - textSize) / 2;
 
-            this.text = new Text(x + textIndention, y + (h / 3), fontSize, text, Color.BLACK);
+            this.text = new Text(x + textIndention, y + (h / 3), fontSize, text, Color.Black);
         }
 
         public override void DrawMe()

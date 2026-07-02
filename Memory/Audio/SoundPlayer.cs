@@ -1,51 +1,61 @@
-﻿using NAudio.Wave;
+﻿using Raylib_cs;
 
 namespace Memory
 {
     class SoundPlayer
     {
-        protected readonly WaveOutEvent player;
-        protected readonly WaveFileReader fileReader;
+        protected Sound sound;
         protected bool muteMe;
-        
+        protected float volume;
+
         public SoundPlayer(string pathToSound)
         {
-            player = new WaveOutEvent();
-            fileReader = new WaveFileReader(pathToSound);
+            sound = Raylib.LoadSound(pathToSound);
             muteMe = false;
+            volume = 1.0f;
         }
 
         public void UpdateVolume(float value)
         {
-            player.Volume = value;
+            volume = value;
+            Raylib.SetSoundVolume(sound, muteMe ? 0f : volume);
         }
 
         public virtual void Mute()
         {
             muteMe = true;
+            Raylib.SetSoundVolume(sound, 0f);
         }
 
         public virtual void UnMute()
         {
             muteMe = false;
+            Raylib.SetSoundVolume(sound, volume);
         }
 
         public virtual void Init()
         {
-            player.Init(fileReader);
+            // Sound is already loaded and ready in the constructor with raylib,
+            // kept here so SoundManager's existing call sites don't need to change.
         }
 
         public void Play()
         {
             if (!muteMe)
             {
-                player.Play();
+                Raylib.PlaySound(sound);
             }
         }
 
         public void ResetPosition()
         {
-            fileReader.Position = 0;
+            // raylib's PlaySound always restarts a short one-shot sound from the
+            // beginning, so there's no separate "reset" step needed here.
+        }
+
+        public void Unload()
+        {
+            Raylib.UnloadSound(sound);
         }
     }
 }

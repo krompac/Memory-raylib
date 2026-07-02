@@ -1,8 +1,10 @@
-﻿namespace Memory
+﻿using Raylib_cs;
+
+namespace Memory
 {
     class OptionsManager
     {
-        private MuteOption muteAllOption;
+        private readonly MuteOption muteAllOption;
         public SoundOption musicSounds;
         public SoundOption buttonSounds;
 
@@ -10,7 +12,7 @@
         {
             var xPos = 550;
             var yPos = 300;
-            var text = new Text(xPos - 200, yPos + 7, 35, "Mute all?", Raylib.Color.RAYWHITE);
+            var text = new Text(xPos - 200, yPos + 7, 35, "Mute all?", Color.RayWhite);
             muteAllOption = new MuteOption(SoundManager.Instance.MuteAll, SoundManager.Instance.UnMuteAll, text, xPos, yPos, 50, 50);
 
             buttonSounds = new SoundOption("Click sounds", 1, SoundManager.Instance.MuteSounds, SoundManager.Instance.UnMuteSounds);

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using static Raylib.Raylib;
+using static Raylib_cs.Raylib;
 
 namespace Memory
 {
     class Program
     {
-        private static readonly string backslash = ((char)92).ToString();
         private static readonly int windowWidth = 640;
         private static readonly int windowHeight = 480;
 
@@ -15,12 +14,14 @@ namespace Memory
         {
             InitWindow(windowWidth, windowHeight, "Memory");
             SetWindowMinSize(windowWidth, windowHeight);
+            InitAudioDevice();
 
             SetWindowIcon(LoadImage(GetIconPath()));
-            
+
             var gameManager = new GameManager(windowWidth, windowHeight);
             gameManager.GameLoop();
 
+            CloseAudioDevice();
             CloseWindow();
 
             Environment.Exit(1);
@@ -28,44 +29,39 @@ namespace Memory
 
         private static string GetIconPath()
         {
-            var picturesPath = PathToPictures() + backslash + "icon";
+            var picturesPath = Path.Combine(PathToPictures(), "icon");
 
             return Directory.GetFiles(picturesPath).FirstOrDefault();
         }
 
         public static string GetCheckMarkPath()
         {
-            return Directory.GetFiles(PathToPictures() + backslash + "checkmark").FirstOrDefault();
+            return Directory.GetFiles(Path.Combine(PathToPictures(), "checkmark")).FirstOrDefault();
         }
 
         public static string GetCardsPath()
         {
-            return PathToPictures() + backslash + "willdabeast";
+            return Path.Combine(PathToPictures(), "willdabeast");
         }
 
         public static string GetTitlePath()
         {
-            return Directory.GetFiles(PathToPictures() + backslash + "title").FirstOrDefault();
+            return Directory.GetFiles(Path.Combine(PathToPictures(), "title")).FirstOrDefault();
         }
 
         private static string PathToAssets()
         {
-            var path = Directory.GetCurrentDirectory().Split(backslash[0]);
-            Array.Resize(ref path, path.Length - 2);
-
-            var newPath = string.Join(backslash, path) + backslash + "Assets";
-
-            return newPath;
+            return Path.Combine(Directory.GetCurrentDirectory(), "Assets");
         }
 
         public static string PathToPictures()
         {
-            return PathToAssets() + backslash + "Pictures";
+            return Path.Combine(PathToAssets(), "Pictures");
         }
 
         public static string PathToSounds()
         {
-            return PathToAssets() + backslash + "Sounds";
+            return Path.Combine(PathToAssets(), "Sounds");
         }
     }
 }
