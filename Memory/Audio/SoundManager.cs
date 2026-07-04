@@ -47,14 +47,14 @@
                 return next;
             });
 
-            gameplayMusicPlayer = new MusicPlayer(pathToSounds[AudioFiles.gameplay_theme.ToString()]);
+            gameplayMusicPlayer = new MusicPlayer(pathToSounds[nameof(AudioFiles.gameplay_theme)]);
 
-            buttonSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.buttonsound.ToString()]);
-            cardClickSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.card_click.ToString()]);
-            cardMatchedSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.card_succes.ToString()]);
-            gameWonSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.game_won.ToString()]);
+            buttonSoundPlayer = new SoundPlayer(pathToSounds[nameof(AudioFiles.buttonsound)]);
+            cardClickSoundPlayer = new SoundPlayer(pathToSounds[nameof(AudioFiles.card_click)]);
+            cardMatchedSoundPlayer = new SoundPlayer(pathToSounds[nameof(AudioFiles.card_succes)]);
+            gameWonSoundPlayer = new SoundPlayer(pathToSounds[nameof(AudioFiles.game_won)]);
 
-            menuMusicPlayer = new MusicPlayer(pathToSounds[AudioFiles.menu_theme.ToString()]);
+            menuMusicPlayer = new MusicPlayer(pathToSounds[nameof(AudioFiles.menu_theme)]);
         }
 
         public void UpdateSound(float value)
