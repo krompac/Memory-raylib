@@ -60,13 +60,15 @@ namespace Memory
             {
                 case Difficulty.Easy:
                     turnTimer = 55;
-                    resetTimer = 33;
+                    resetTimer = 25;
                     break;
                 case Difficulty.Medium:
-                    turnTimer = resetTimer = 33;
+                    turnTimer = 33;
+                    resetTimer = 20;
                     break;
                 case Difficulty.Hard:
-                    turnTimer = resetTimer = 22;
+                    turnTimer = 22;
+                    resetTimer = 15;
                     break;
             }
 

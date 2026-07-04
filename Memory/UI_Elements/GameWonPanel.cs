@@ -3,13 +3,13 @@ using static Raylib_cs.Raylib;
 
 namespace Memory
 {
-    class GameWonPanel : UI_Element
+    class GameWonPanel(GameWonPanel.PlaySound sound) : UI_Element()
     {
         public delegate void PlaySound();
 
-        private readonly PlaySound sound;
+        private readonly PlaySound sound = sound;
 
-        private bool soundPlayed;
+        private bool soundPlayed = false;
 
         private Button gameWonButton;
         private Text text = null;
@@ -20,12 +20,6 @@ namespace Memory
             {
                 return gameWonButton.Window;
             }
-        }
-
-        public GameWonPanel(PlaySound sound) : base()
-        {
-            this.sound = sound;
-            soundPlayed = false;
         }
 
         public void Init(Player winner)

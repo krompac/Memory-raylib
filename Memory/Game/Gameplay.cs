@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+﻿using Raylib_cs;
 
 namespace Memory
 {
@@ -96,7 +91,7 @@ namespace Memory
 
                     images[smallList[j]]++;
 
-                    if ((memCards.Count) % rowWidth == 0)
+                    if (memCards.Count % rowWidth == 0)
                     {
                         y += 65;
                         x = startinXPos;
@@ -114,11 +109,11 @@ namespace Memory
 
         public bool CheckIfWon()
         {
-            var isWon = memCards.Count(card => card.IsFound) == memCards.Count;
+            bool isWon = memCards.Count(card => card.IsFound) == memCards.Count;
 
             if (isWon)
             {
-                var winner = Players.OrderBy(player => player.Score).FirstOrDefault();
+                Player winner = Players.OrderBy(player => player.Score).LastOrDefault();
 
                 gameWonPanel.Init(winner);
             }
@@ -170,7 +165,7 @@ namespace Memory
             {
                 if (firstOpenedCard == null)
                 {
-                    firstOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+                    firstOpenedCard = memCards.FirstOrDefault(card => card.CheckIfClicked());
 
                     if (firstOpenedCard != null)
                     {
@@ -179,7 +174,7 @@ namespace Memory
                 }
                 else
                 {
-                    lastOpenedCard = memCards.Where(card => card.CheckIfClicked()).FirstOrDefault();
+                    lastOpenedCard = memCards.FirstOrDefault(card => card.CheckIfClicked());
 
                     if (lastOpenedCard == firstOpenedCard)
                     {
