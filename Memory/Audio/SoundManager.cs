@@ -1,11 +1,22 @@
 ﻿namespace Memory
 {
+    enum AudioFiles
+    {
+        gameplay_theme,
+        buttonsound,
+        card_click,
+        card_succes,
+        game_won,
+        menu_theme
+    }
+
     class SoundManager
     {
         private readonly SoundPlayer buttonSoundPlayer;
+        private readonly SoundPlayer gameWonSoundPlayer;
         private readonly SoundPlayer cardClickSoundPlayer;
         private readonly SoundPlayer cardMatchedSoundPlayer;
-        private readonly SoundPlayer gameWonSoundPlayer;
+
         private readonly MusicPlayer menuMusicPlayer;
         private readonly MusicPlayer gameplayMusicPlayer;
 
@@ -23,16 +34,27 @@
 
         private SoundManager()
         {
-            var pathToSounds = Directory.GetFiles(Program.PathToSounds());
+            var pathToSounds = Directory.GetFiles(Program.PathToSounds()).Aggregate(
+            new Dictionary<string, string>(),
+            (acc, pathToSound) =>
+            {
+                var key = pathToSound.Split('/')[^1].Split('.')[0];
+                var next = new Dictionary<string, string>(acc)
+                {
+                    [key] = pathToSound
+                };
 
-            gameplayMusicPlayer = new MusicPlayer(pathToSounds[0]);
+                return next;
+            });
 
-            buttonSoundPlayer = new SoundPlayer(pathToSounds[1]);
-            cardClickSoundPlayer = new SoundPlayer(pathToSounds[2]);
-            cardMatchedSoundPlayer = new SoundPlayer(pathToSounds[3]);
-            gameWonSoundPlayer = new SoundPlayer(pathToSounds[4]);
+            gameplayMusicPlayer = new MusicPlayer(pathToSounds[AudioFiles.gameplay_theme.ToString()]);
 
-            menuMusicPlayer = new MusicPlayer(pathToSounds[5]);
+            buttonSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.buttonsound.ToString()]);
+            cardClickSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.card_click.ToString()]);
+            cardMatchedSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.card_succes.ToString()]);
+            gameWonSoundPlayer = new SoundPlayer(pathToSounds[AudioFiles.game_won.ToString()]);
+
+            menuMusicPlayer = new MusicPlayer(pathToSounds[AudioFiles.menu_theme.ToString()]);
         }
 
         public void UpdateSound(float value)
