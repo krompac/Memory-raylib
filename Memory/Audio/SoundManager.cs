@@ -15,11 +15,7 @@
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new SoundManager();
-                    instance.Init();
-                }
+                instance ??= new SoundManager();
 
                 return instance;
             }
@@ -27,7 +23,7 @@
 
         private SoundManager()
         {
-            var pathToSounds = System.IO.Directory.GetFiles(Program.PathToSounds());
+            var pathToSounds = Directory.GetFiles(Program.PathToSounds());
 
             gameplayMusicPlayer = new MusicPlayer(pathToSounds[0]);
 
@@ -52,16 +48,6 @@
 
             menuMusicPlayer.UpdateVolume(value);
             gameplayMusicPlayer.UpdateVolume(value);
-        }
-
-        public void Init()
-        {
-            buttonSoundPlayer.Init();
-            cardClickSoundPlayer.Init();
-            cardMatchedSoundPlayer.Init();
-            gameWonSoundPlayer.Init();
-            menuMusicPlayer.Init();
-            gameplayMusicPlayer.Init();
         }
 
         // NEW: raylib streams music from the main thread instead of a background

@@ -33,12 +33,6 @@ namespace Memory
             Raylib.SetSoundVolume(sound, volume);
         }
 
-        public virtual void Init()
-        {
-            // Sound is already loaded and ready in the constructor with raylib,
-            // kept here so SoundManager's existing call sites don't need to change.
-        }
-
         public void Play()
         {
             if (!muteMe)

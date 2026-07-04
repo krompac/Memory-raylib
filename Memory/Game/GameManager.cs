@@ -44,7 +44,6 @@ namespace Memory
                 switch (gameWindow)
                 {
                     case GameWindow.Menu:
-
                         DrawTexture(titlePicture, (windowWidth - titlePicture.Width) / 2, 20, Color.Blue);
                         DrawWindowWithButtons(menuItems);
                         SoundManager.Instance.MenuTheme();
@@ -88,26 +87,26 @@ namespace Memory
             int yPos = 150;
             int yDiff = 65;
 
-            var startButton = new Button(xPos, yPos, 150, 50, "Start Game", GameWindow.PlayerSelect);
-            var optionsButton = new Button(xPos, yPos + yDiff, 150, 50, "Options", GameWindow.Options);
-            var quitButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Quit", GameWindow.Quit);
+            Button startButton = new Button(xPos, yPos, 150, 50, "Start Game", GameWindow.PlayerSelect);
+            Button optionsButton = new Button(xPos, yPos + yDiff, 150, 50, "Options", GameWindow.Options);
+            Button quitButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Quit", GameWindow.Quit);
 
             yPos = 100;
 
-            var onePlayerButton = new Button(xPos, yPos, 150, 50, "1 player", GameWindow.DifficultySelect);
-            var twoPlayersButton = new Button(xPos, yPos + yDiff, 150, 50, "2 players", GameWindow.DifficultySelect);
-            var threePlayersButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "3 players", GameWindow.DifficultySelect);
-            var fourPlayersButton = new Button(xPos, yPos + yDiff * 3, 150, 50, "4 players", GameWindow.DifficultySelect);
+            Button onePlayerButton = new Button(xPos, yPos, 150, 50, "1 player", GameWindow.DifficultySelect);
+            Button twoPlayersButton = new Button(xPos, yPos + yDiff, 150, 50, "2 players", GameWindow.DifficultySelect);
+            Button threePlayersButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "3 players", GameWindow.DifficultySelect);
+            Button fourPlayersButton = new Button(xPos, yPos + yDiff * 3, 150, 50, "4 players", GameWindow.DifficultySelect);
 
-            var easyButton = new Button(xPos, yPos, 150, 50, "Easy", GameWindow.Game);
-            var mediumButton = new Button(xPos, yPos + yDiff, 150, 50, "Medium", GameWindow.Game);
-            var hardButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Hard", GameWindow.Game);
+            Button easyButton = new Button(xPos, yPos, 150, 50, "Easy", GameWindow.Game);
+            Button mediumButton = new Button(xPos, yPos + yDiff, 150, 50, "Medium", GameWindow.Game);
+            Button hardButton = new Button(xPos, yPos + yDiff * 2, 150, 50, "Hard", GameWindow.Game);
 
             toMenu = new ToMenuButton(540, 460, 100, 20, "Back", GameWindow.Menu);
 
-            menuItems = new List<Button> { startButton, optionsButton, quitButton };
-            playersButtons = new List<Button> { onePlayerButton, twoPlayersButton, threePlayersButton, fourPlayersButton };
-            difficultysButtons = new List<Button> { easyButton, mediumButton, hardButton };
+            menuItems = [startButton, optionsButton, quitButton];
+            playersButtons = [onePlayerButton, twoPlayersButton, threePlayersButton, fourPlayersButton];
+            difficultysButtons = [easyButton, mediumButton, hardButton];
             gameWindow = GameWindow.Menu;
         }
 
@@ -187,7 +186,7 @@ namespace Memory
 
         private void InitializePlayers(int buttonIndex)
         {
-            var players = new List<Player>();
+            List<Player> players = [];
             switch (buttonIndex)
             {
                 case 3:

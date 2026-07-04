@@ -9,20 +9,12 @@ namespace Memory
         Paused
     }
 
-    class MusicPlayer
+    class MusicPlayer(string pathToMusic)
     {
-        private Music music;
-        private bool muteMe;
-        private float volume;
-        private PlaybackState state;
-
-        public MusicPlayer(string pathToMusic)
-        {
-            music = Raylib.LoadMusicStream(pathToMusic);
-            muteMe = false;
-            volume = 1.0f;
-            state = PlaybackState.Stopped;
-        }
+        private Music music = Raylib.LoadMusicStream(pathToMusic);
+        private bool muteMe = false;
+        private float volume = 1.0f;
+        private PlaybackState state = PlaybackState.Stopped;
 
         public PlaybackState PlaybackState => state;
 
@@ -30,11 +22,6 @@ namespace Memory
         {
             volume = value;
             Raylib.SetMusicVolume(music, muteMe ? 0f : volume);
-        }
-
-        public void Init()
-        {
-            // Music is already loaded in the constructor with raylib.
         }
 
         public void Mute()
